@@ -1,8 +1,10 @@
-#include "Book.h"
+#pragma once
+#include "pch.h"
 #include <nlohmann/json.hpp>
 #include <vector>
 #include <fstream>
 #include "JsonConverter.h"
+#include "Book.h"
 
 using nlohmann::json;
 using namespace std;
@@ -34,21 +36,16 @@ void from_json(const json& j, TempData& t) {
 	std::copy(sj.begin(), sj.end(), t.books.begin());
 }
 
-
-static class JsonConverter
+string JsonConverter::VectorToString(vector<Book> books)
 {
-protected:
-	static string VectorToString(vector<Book> books)
-	{
-		TempData t;
-		t.books = books;
-		json j = t;
-		return string(j.dump());
-	}
-	static vector<Book> StringToVector(string str)
-	{
-		json j = json::parse(str);
-		TempData t = j;
-		return t.books;
-	}
-};
+	TempData t;
+	t.books = books;
+	json j = t;
+	return string(j.dump());
+}
+vector<Book> JsonConverter::StringToVector(string str)
+{
+	json j = json::parse(str);
+	TempData t = j;
+	return t.books;
+}

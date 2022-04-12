@@ -8,20 +8,17 @@
 
 using namespace std;
 
-static class FileProvider : public JsonConverter
+
+void FileProvider::SaveToFile(vector<Book> books, string filePath)
 {
-public:
-	static void SaveToFile(vector<Book> books, string filePath)
-	{
-		string str = VectorToString(books);
-		ofstream ostr(filePath);
-		ostr << str;
-		ostr.close();
-	}
-	static vector<Book> GetListFromFile(string filePath)
-	{
-		ifstream istr(filePath);
-		if (!istr.is_open()) return vector<Book>{};
-		return StringToVector(string((std::istreambuf_iterator<char>(istr)), std::istreambuf_iterator<char>()));
-	}
-};
+	string str = VectorToString(books);
+	ofstream ostr(filePath);
+	ostr << str;
+	ostr.close();
+}
+vector<Book> FileProvider::GetListFromFile(string filePath)
+{
+	ifstream istr(filePath);
+	if (!istr.is_open()) return vector<Book>{};
+	return StringToVector(string((std::istreambuf_iterator<char>(istr)), std::istreambuf_iterator<char>()));
+}
