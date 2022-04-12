@@ -4,9 +4,10 @@
 #include <fstream>
 #include "Book.h"
 
-static class FileProvider
+static class FileProvider : public JsonConverter
 {
 public:
-	std::vector<Book> GetBookVector(std::string filePath);
+	static void SaveToFile(vector<Book> books, string filePath);
+	static vector<Book> GetListFromFile(string filePath);
 };
 

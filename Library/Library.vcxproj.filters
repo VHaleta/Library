@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="FileProvider">
+      <UniqueIdentifier>{c0a96b23-79f0-43cd-9a9f-0ce8cb79706f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{ed311b42-b9db-400d-a1c9-4683276d0b1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">
@@ -33,10 +39,13 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FileProvider.h">
-      <Filter>Header Files</Filter>
+      <Filter>FileProvider</Filter>
     </ClInclude>
     <ClInclude Include="Book.h">
-      <Filter>Header Files</Filter>
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonConverter.h">
+      <Filter>FileProvider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -52,11 +61,11 @@
     <ClCompile Include="EventsHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileProvider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="JsonConverter.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>FileProvider</Filter>
+    </ClCompile>
+    <ClCompile Include="FileProvider.cpp">
+      <Filter>FileProvider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

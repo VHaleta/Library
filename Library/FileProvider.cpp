@@ -4,22 +4,24 @@
 #include <fstream>
 #include "Book.h"
 #include "FileProvider.h"
+#include "JsonConverter.h"
 
 using namespace std;
 
-static class FileProvider
+static class FileProvider : public JsonConverter
 {
 public:
-	static vector<Book> GetBooks(string filePath)
+	static void SaveToFile(vector<Book> books, string filePath)
 	{
-		ifstream istream(filePath);
-		string fileText((std::istreambuf_iterator<char>(istream)), std::istreambuf_iterator<char>());
-		nlohmann::json j;
-	}
-	static void SaveToFile(vector<Book> arr, string filePath)
-	{
+		string str = VectorToString(books);
 		ofstream ostr(filePath);
-		ostr << VectorToString(arr);
+		ostr << str;
 		ostr.close();
+	}
+	static vector<Book> GetListFromFile(string filePath)
+	{
+		ifstream istr(filePath);
+		if (!istr.is_open()) return vector<Book>{};
+		return StringToVector(string((std::istreambuf_iterator<char>(istr)), std::istreambuf_iterator<char>()));
 	}
 };
