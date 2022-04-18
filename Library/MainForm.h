@@ -1,5 +1,5 @@
 ﻿#pragma once
-
+#include "EventsHandler.h"
 namespace CppCLRWinFormsProject {
 
 	using namespace System;
@@ -18,15 +18,11 @@ namespace CppCLRWinFormsProject {
 		MainForm(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+			зберегтиToolStripMenuItem->Enabled = false;
+			dataGridView1->Columns->Add("name", "Name");
+			dataGridView1->Columns->Add("author", "Author");
 		}
-
 	protected:
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
 		~MainForm()
 		{
 			if (components)
@@ -42,12 +38,14 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::ToolStripMenuItem^ відкритиToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ зберегтиToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ зберегтиЯкToolStripMenuItem;
+	private: System::Windows::Forms::OpenFileDialog^ openFileDialog1;
+	private: System::Windows::Forms::SaveFileDialog^ saveFileDialog1;
 
 	private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -63,6 +61,8 @@ namespace CppCLRWinFormsProject {
 			this->зберегтиToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->зберегтиЯкToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->сортуванняфільтруванняToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
+			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->SuspendLayout();
@@ -109,27 +109,33 @@ namespace CppCLRWinFormsProject {
 			// відкритиToolStripMenuItem
 			// 
 			this->відкритиToolStripMenuItem->Name = L"відкритиToolStripMenuItem";
-			this->відкритиToolStripMenuItem->Size = System::Drawing::Size(218, 32);
+			this->відкритиToolStripMenuItem->Size = System::Drawing::Size(224, 32);
 			this->відкритиToolStripMenuItem->Text = L"Відкрити";
 			this->відкритиToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::відкритиToolStripMenuItem_Click);
 			// 
 			// зберегтиToolStripMenuItem
 			// 
 			this->зберегтиToolStripMenuItem->Name = L"зберегтиToolStripMenuItem";
-			this->зберегтиToolStripMenuItem->Size = System::Drawing::Size(218, 32);
+			this->зберегтиToolStripMenuItem->Size = System::Drawing::Size(224, 32);
 			this->зберегтиToolStripMenuItem->Text = L"Зберегти";
+			this->зберегтиToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::зберегтиToolStripMenuItem_Click);
 			// 
 			// зберегтиЯкToolStripMenuItem
 			// 
 			this->зберегтиЯкToolStripMenuItem->Name = L"зберегтиЯкToolStripMenuItem";
-			this->зберегтиЯкToolStripMenuItem->Size = System::Drawing::Size(218, 32);
+			this->зберегтиЯкToolStripMenuItem->Size = System::Drawing::Size(224, 32);
 			this->зберегтиЯкToolStripMenuItem->Text = L"Зберегти як...";
+			this->зберегтиЯкToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::зберегтиЯкToolStripMenuItem_Click);
 			// 
 			// сортуванняфільтруванняToolStripMenuItem
 			// 
 			this->сортуванняфільтруванняToolStripMenuItem->Name = L"сортуванняфільтруванняToolStripMenuItem";
 			this->сортуванняфільтруванняToolStripMenuItem->Size = System::Drawing::Size(268, 32);
 			this->сортуванняфільтруванняToolStripMenuItem->Text = L"Сортування/фільтрування";
+			// 
+			// openFileDialog1
+			// 
+			this->openFileDialog1->FileName = L"openFileDialog1";
 			// 
 			// MainForm
 			// 
@@ -155,7 +161,14 @@ namespace CppCLRWinFormsProject {
 		}
 #pragma endregion
 	private: System::Void відкритиToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+		dataGridView1->Rows->Clear();
+		dataGridView1 = EventsHandler().OpenFile(openFileDialog1, dataGridView1);
+	}
+	private: System::Void зберегтиToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 
 	}
+private: System::Void зберегтиЯкToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	EventsHandler().SaveFile(saveFileDialog1);
+}
 };
 }

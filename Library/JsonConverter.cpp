@@ -18,16 +18,16 @@ void to_json(json& j, const TempData& temp) {
 	json sj;
 	for (int i = 0; i < temp.books.size(); i++)
 	{
-		sj += json{ {"name", temp.books[i].Name},
-		{"author", temp.books[i].Author} };
+		sj += json{ {"name", temp.books[i].name},
+		{"author", temp.books[i].author} };
 	}
 
 	j["books"] = sj;
 }
 
 void from_json(const json& j, Book& b) {
-	b.Name = j.at("name");
-	b.Author = j.at("author");
+	b.name = j.at("name");
+	b.author = j.at("author");
 }
 
 void from_json(const json& j, TempData& t) {

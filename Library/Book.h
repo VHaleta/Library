@@ -3,8 +3,8 @@
 class Book 
 {
 public:
-	std::string Name;
-	std::string Author;
+	std::string name;
+	std::string author;
 	//std::string Description;
 	//std::string PublishingHouse;
 	//int Pages;
