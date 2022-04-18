@@ -7,10 +7,8 @@ DataGridView^ EventsHandler::OpenFile(OpenFileDialog^ openFileDialog, DataGridVi
 	DataGridView^ result;
 	if (System::Windows::Forms::DialogResult::OK != openFileDialog->ShowDialog()) dataGridView1;
 
-	char temp[100];
-	sprintf(temp, "%s", openFileDialog->FileName);
-	filePath = string(temp);
-	vector<Book> books = FileProvider::GetListFromFile(filePath);
+	filePath = msclr::interop::marshal_as<string>(openFileDialog->FileName);
+	books = FileProvider::GetListFromFile(filePath);
 
 	for (int i = 0; i < books.size(); i++)
 	{
@@ -25,5 +23,11 @@ void EventsHandler::SaveFile(SaveFileDialog^ saveFileDialog)
 {
 	saveFileDialog = gcnew SaveFileDialog();
 	if (System::Windows::Forms::DialogResult::OK != saveFileDialog->ShowDialog()) return;
-	FileProvider::SaveToFile(books, msclr::interop::marshal_as<std::string>(saveFileDialog->FileName));
+	FileProvider::SaveToFile(books, msclr::interop::marshal_as<string>(saveFileDialog->FileName));
+}
+
+void EventsHandler::SaveFile()
+{
+	if (filePath == "default") return;
+	FileProvider::SaveToFile(books, filePath);
 }

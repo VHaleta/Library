@@ -10,8 +10,8 @@ vector<Book> EventsHandler::books = vector<Book>{};
 [STAThread]
 int main()
 {
-  Application::EnableVisualStyles();
-  Application::SetCompatibleTextRenderingDefault(false);
-  Application::Run(gcnew CppCLRWinFormsProject::MainForm());
-  return 0;
+	Application::EnableVisualStyles();
+	Application::SetCompatibleTextRenderingDefault(false);
+	Application::Run(gcnew CppCLRWinFormsProject::MainForm());
+	return 0;
 }

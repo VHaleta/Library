@@ -18,7 +18,6 @@ namespace CppCLRWinFormsProject {
 		MainForm(void)
 		{
 			InitializeComponent();
-			зберегтиToolStripMenuItem->Enabled = false;
 			dataGridView1->Columns->Add("name", "Name");
 			dataGridView1->Columns->Add("author", "Author");
 		}
@@ -160,15 +159,18 @@ namespace CppCLRWinFormsProject {
 
 		}
 #pragma endregion
-	private: System::Void відкритиToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void відкритиToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
+	{
 		dataGridView1->Rows->Clear();
 		dataGridView1 = EventsHandler().OpenFile(openFileDialog1, dataGridView1);
 	}
-	private: System::Void зберегтиToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
-
+	private: System::Void зберегтиToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
+	{
+		EventsHandler().SaveFile();
 	}
-private: System::Void зберегтиЯкToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
-	EventsHandler().SaveFile(saveFileDialog1);
-}
-};
+	private: System::Void зберегтиЯкToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
+	{
+		EventsHandler().SaveFile(saveFileDialog1);
+	}
+	};
 }

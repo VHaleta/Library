@@ -22,6 +22,7 @@ public:
 	EventsHandler() {}
 	DataGridView^ OpenFile(OpenFileDialog^ openFileDialog, DataGridView^ dataGridView1);
 	void SaveFile(SaveFileDialog^ saveFileDialog);
+	void SaveFile();
 	~EventsHandler() {
 //		throw "destroy";
 	}
