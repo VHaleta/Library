@@ -18,8 +18,8 @@ namespace CppCLRWinFormsProject {
 		MainForm(void)
 		{
 			InitializeComponent();
-			dataGridView1->Columns->Add("name", "Name");
-			dataGridView1->Columns->Add("author", "Author");
+			dataGridViewLibrary->Columns->Add("name", "Name");
+			dataGridViewLibrary->Columns->Add("author", "Author");
 		}
 	protected:
 		~MainForm()
@@ -29,22 +29,39 @@ namespace CppCLRWinFormsProject {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::DataGridView^ dataGridView1;
+	private: System::Windows::Forms::DataGridView^ dataGridViewLibrary;
 	protected:
-	private: System::Windows::Forms::MenuStrip^ menuStrip1;
-	private: System::Windows::Forms::ToolStripMenuItem^ файлToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^ сортуванняфільтруванняToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^ відкритиToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^ зберегтиToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^ зберегтиЯкToolStripMenuItem;
-	private: System::Windows::Forms::OpenFileDialog^ openFileDialog1;
-	private: System::Windows::Forms::SaveFileDialog^ saveFileDialog1;
+
+	private: System::Windows::Forms::MenuStrip^ menuMain;
+	protected:
+
+	protected:
+
+	private: System::Windows::Forms::ToolStripMenuItem^ mmiFile;
+	private: System::Windows::Forms::ToolStripMenuItem^ mmiFilter;
+
+
+	private: System::Windows::Forms::ToolStripMenuItem^ mmiOpen;
+	private: System::Windows::Forms::ToolStripMenuItem^ mmiSave;
+	private: System::Windows::Forms::ToolStripMenuItem^ mmiSaveAs;
+	private: System::Windows::Forms::OpenFileDialog^ openFileDialogLibrary;
+	private: System::Windows::Forms::SaveFileDialog^ saveFileDialogLibrary;
+
+
+
+
+
+
 
 	private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
 		System::ComponentModel::Container^ components;
+
+	private: EventsHandler^ eventsHandler;
+	private: String^ fileName;
+	private: vector<Book>* books;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -53,88 +70,85 @@ namespace CppCLRWinFormsProject {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
-			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
-			this->файлToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->відкритиToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->зберегтиToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->зберегтиЯкToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->сортуванняфільтруванняToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
-			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
-			this->menuStrip1->SuspendLayout();
+			this->dataGridViewLibrary = (gcnew System::Windows::Forms::DataGridView());
+			this->menuMain = (gcnew System::Windows::Forms::MenuStrip());
+			this->mmiFile = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->mmiOpen = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->mmiSave = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->mmiSaveAs = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->mmiFilter = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->openFileDialogLibrary = (gcnew System::Windows::Forms::OpenFileDialog());
+			this->saveFileDialogLibrary = (gcnew System::Windows::Forms::SaveFileDialog());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridViewLibrary))->BeginInit();
+			this->menuMain->SuspendLayout();
 			this->SuspendLayout();
 			// 
-			// dataGridView1
+			// dataGridViewLibrary
 			// 
-			this->dataGridView1->AllowUserToAddRows = false;
-			this->dataGridView1->AllowUserToDeleteRows = false;
-			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Location = System::Drawing::Point(11, 59);
-			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->ReadOnly = true;
-			this->dataGridView1->RowHeadersWidth = 51;
-			this->dataGridView1->RowTemplate->Height = 24;
-			this->dataGridView1->Size = System::Drawing::Size(605, 539);
-			this->dataGridView1->TabIndex = 0;
+			this->dataGridViewLibrary->AllowUserToAddRows = false;
+			this->dataGridViewLibrary->AllowUserToDeleteRows = false;
+			this->dataGridViewLibrary->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dataGridViewLibrary->Location = System::Drawing::Point(11, 59);
+			this->dataGridViewLibrary->Name = L"dataGridViewLibrary";
+			this->dataGridViewLibrary->ReadOnly = true;
+			this->dataGridViewLibrary->RowHeadersWidth = 51;
+			this->dataGridViewLibrary->RowTemplate->Height = 24;
+			this->dataGridViewLibrary->Size = System::Drawing::Size(605, 539);
+			this->dataGridViewLibrary->TabIndex = 0;
 			// 
-			// menuStrip1
+			// menuMain
 			// 
-			this->menuStrip1->BackColor = System::Drawing::SystemColors::Control;
-			this->menuStrip1->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->menuMain->BackColor = System::Drawing::SystemColors::Control;
+			this->menuMain->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->menuStrip1->ImageScalingSize = System::Drawing::Size(20, 20);
-			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
-				this->файлToolStripMenuItem,
-					this->сортуванняфільтруванняToolStripMenuItem
+			this->menuMain->ImageScalingSize = System::Drawing::Size(20, 20);
+			this->menuMain->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) { this->mmiFile, this->mmiFilter });
+			this->menuMain->Location = System::Drawing::Point(0, 0);
+			this->menuMain->Name = L"menuMain";
+			this->menuMain->Size = System::Drawing::Size(1243, 36);
+			this->menuMain->TabIndex = 1;
+			this->menuMain->Text = L"menuStrip1";
+			// 
+			// mmiFile
+			// 
+			this->mmiFile->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+				this->mmiOpen, this->mmiSave,
+					this->mmiSaveAs
 			});
-			this->menuStrip1->Location = System::Drawing::Point(0, 0);
-			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Size = System::Drawing::Size(1243, 36);
-			this->menuStrip1->TabIndex = 1;
-			this->menuStrip1->Text = L"menuStrip1";
+			this->mmiFile->Name = L"mmiFile";
+			this->mmiFile->Size = System::Drawing::Size(74, 32);
+			this->mmiFile->Text = L"Файл";
 			// 
-			// файлToolStripMenuItem
+			// mmiOpen
 			// 
-			this->файлToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
-				this->відкритиToolStripMenuItem,
-					this->зберегтиToolStripMenuItem, this->зберегтиЯкToolStripMenuItem
-			});
-			this->файлToolStripMenuItem->Name = L"файлToolStripMenuItem";
-			this->файлToolStripMenuItem->Size = System::Drawing::Size(74, 32);
-			this->файлToolStripMenuItem->Text = L"Файл";
+			this->mmiOpen->Name = L"mmiOpen";
+			this->mmiOpen->Size = System::Drawing::Size(224, 32);
+			this->mmiOpen->Text = L"Відкрити";
+			this->mmiOpen->Click += gcnew System::EventHandler(this, &MainForm::відкритиToolStripMenuItem_Click);
 			// 
-			// відкритиToolStripMenuItem
+			// mmiSave
 			// 
-			this->відкритиToolStripMenuItem->Name = L"відкритиToolStripMenuItem";
-			this->відкритиToolStripMenuItem->Size = System::Drawing::Size(224, 32);
-			this->відкритиToolStripMenuItem->Text = L"Відкрити";
-			this->відкритиToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::відкритиToolStripMenuItem_Click);
+			this->mmiSave->Name = L"mmiSave";
+			this->mmiSave->Size = System::Drawing::Size(224, 32);
+			this->mmiSave->Text = L"Зберегти";
+			this->mmiSave->Click += gcnew System::EventHandler(this, &MainForm::зберегтиToolStripMenuItem_Click);
 			// 
-			// зберегтиToolStripMenuItem
+			// mmiSaveAs
 			// 
-			this->зберегтиToolStripMenuItem->Name = L"зберегтиToolStripMenuItem";
-			this->зберегтиToolStripMenuItem->Size = System::Drawing::Size(224, 32);
-			this->зберегтиToolStripMenuItem->Text = L"Зберегти";
-			this->зберегтиToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::зберегтиToolStripMenuItem_Click);
+			this->mmiSaveAs->Name = L"mmiSaveAs";
+			this->mmiSaveAs->Size = System::Drawing::Size(224, 32);
+			this->mmiSaveAs->Text = L"Зберегти як...";
+			this->mmiSaveAs->Click += gcnew System::EventHandler(this, &MainForm::зберегтиЯкToolStripMenuItem_Click);
 			// 
-			// зберегтиЯкToolStripMenuItem
+			// mmiFilter
 			// 
-			this->зберегтиЯкToolStripMenuItem->Name = L"зберегтиЯкToolStripMenuItem";
-			this->зберегтиЯкToolStripMenuItem->Size = System::Drawing::Size(224, 32);
-			this->зберегтиЯкToolStripMenuItem->Text = L"Зберегти як...";
-			this->зберегтиЯкToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::зберегтиЯкToolStripMenuItem_Click);
+			this->mmiFilter->Name = L"mmiFilter";
+			this->mmiFilter->Size = System::Drawing::Size(268, 32);
+			this->mmiFilter->Text = L"Сортування/фільтрування";
 			// 
-			// сортуванняфільтруванняToolStripMenuItem
+			// openFileDialogLibrary
 			// 
-			this->сортуванняфільтруванняToolStripMenuItem->Name = L"сортуванняфільтруванняToolStripMenuItem";
-			this->сортуванняфільтруванняToolStripMenuItem->Size = System::Drawing::Size(268, 32);
-			this->сортуванняфільтруванняToolStripMenuItem->Text = L"Сортування/фільтрування";
-			// 
-			// openFileDialog1
-			// 
-			this->openFileDialog1->FileName = L"openFileDialog1";
+			this->openFileDialogLibrary->FileName = L"library.txt";
 			// 
 			// MainForm
 			// 
@@ -142,18 +156,18 @@ namespace CppCLRWinFormsProject {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Control;
 			this->ClientSize = System::Drawing::Size(1243, 613);
-			this->Controls->Add(this->dataGridView1);
-			this->Controls->Add(this->menuStrip1);
+			this->Controls->Add(this->dataGridViewLibrary);
+			this->Controls->Add(this->menuMain);
 			this->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
-			this->MainMenuStrip = this->menuStrip1;
+			this->MainMenuStrip = this->menuMain;
 			this->Margin = System::Windows::Forms::Padding(3, 5, 3, 5);
 			this->Name = L"MainForm";
 			this->Text = L"Бібліотека";
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
-			this->menuStrip1->ResumeLayout(false);
-			this->menuStrip1->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridViewLibrary))->EndInit();
+			this->menuMain->ResumeLayout(false);
+			this->menuMain->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -161,16 +175,20 @@ namespace CppCLRWinFormsProject {
 #pragma endregion
 	private: System::Void відкритиToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
 	{
-		dataGridView1->Rows->Clear();
-		dataGridView1 = EventsHandler().OpenFile(openFileDialog1, dataGridView1);
+		dataGridViewLibrary->Rows->Clear();
+		if (System::Windows::Forms::DialogResult::OK != openFileDialogLibrary->ShowDialog()) return;
+
+		fileName = openFileDialogLibrary->FileName;
+		Text = L"Бібліотека" + " (файл:" + fileName + ")";
+		books = eventsHandler->LoadFile(fileName, dataGridViewLibrary);
 	}
 	private: System::Void зберегтиToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
 	{
-		EventsHandler().SaveFile();
+		eventsHandler->SaveFile(books, fileName);
 	}
 	private: System::Void зберегтиЯкToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
 	{
-		EventsHandler().SaveFile(saveFileDialog1);
+		eventsHandler->SaveFile(books, saveFileDialogLibrary);
 	}
 	};
 }

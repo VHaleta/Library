@@ -13,17 +13,10 @@ using namespace System::Data;
 using namespace System::Drawing;
 using namespace std;
 
-class EventsHandler
+ref class EventsHandler
 {
-protected:
-	static string filePath;
-	static vector<Book> books;
 public:
-	EventsHandler() {}
-	DataGridView^ OpenFile(OpenFileDialog^ openFileDialog, DataGridView^ dataGridView1);
-	void SaveFile(SaveFileDialog^ saveFileDialog);
-	void SaveFile();
-	~EventsHandler() {
-//		throw "destroy";
-	}
+	vector<Book>* LoadFile(String^ fileName, DataGridView^ dataGridView);
+	void SaveFile(vector<Book>* books, SaveFileDialog^ saveFileDialog);
+	void SaveFile(vector<Book>* books, String^ fileName);
 };
