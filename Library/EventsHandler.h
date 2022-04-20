@@ -15,15 +15,11 @@ using namespace std;
 
 class EventsHandler
 {
-protected:
-	static string filePath;
+private:
+	static string fileName;
 	static vector<Book> books;
 public:
-	EventsHandler() {}
-	DataGridView^ OpenFile(OpenFileDialog^ openFileDialog, DataGridView^ dataGridView1);
-	void SaveFile(SaveFileDialog^ saveFileDialog);
+	void LoadFile(string fileName, DataGridView^ dataGridView);
 	void SaveFile();
-	~EventsHandler() {
-//		throw "destroy";
-	}
+	void SaveFile(string fileName);
 };

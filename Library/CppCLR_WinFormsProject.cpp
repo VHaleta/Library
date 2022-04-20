@@ -4,7 +4,7 @@
 using namespace System;
 using namespace System::Windows::Forms;
 
-string EventsHandler::filePath = string("default");
+string EventsHandler::fileName = "default";
 vector<Book> EventsHandler::books = vector<Book>{};
 
 [STAThread]
