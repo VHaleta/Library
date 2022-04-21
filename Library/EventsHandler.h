@@ -13,7 +13,7 @@ using namespace System::Data;
 using namespace System::Drawing;
 using namespace std;
 
-class EventsHandler
+ref class EventsHandler
 {
 private:
 	static string fileName;

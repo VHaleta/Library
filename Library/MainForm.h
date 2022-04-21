@@ -40,11 +40,16 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::ToolStripMenuItem^ mmiSaveAs;
 	private: System::Windows::Forms::OpenFileDialog^ openFileDialogLibrary;
 	private: System::Windows::Forms::SaveFileDialog^ saveFileDialogLibrary;
+  
 	private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
 		System::ComponentModel::Container^ components;
+
+	private: EventsHandler^ eventsHandler;
+	private: String^ fileName;
+	private: vector<Book>* books;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -164,10 +169,11 @@ namespace CppCLRWinFormsProject {
 		String^ fileName = openFileDialogLibrary->FileName;
 		Text = L"Бібліотека" + L" (файл:" + fileName + ")";
 		EventsHandler().LoadFile(msclr::interop::marshal_as<std::string>(fileName), dataGridViewLibrary);
+
 	}
 	private: System::Void зберегтиToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
 	{
-		EventsHandler().SaveFile();
+		eventsHandler->SaveFile(books, fileName);
 	}
 	private: System::Void зберегтиЯкToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
 	{
