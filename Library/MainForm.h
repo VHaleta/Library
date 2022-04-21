@@ -8,6 +8,8 @@ namespace CppCLRWinFormsProject {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Collections::Generic;
+
 
 	/// <summary>
 	/// Summary for Form1
@@ -30,29 +32,15 @@ namespace CppCLRWinFormsProject {
 			}
 		}
 	private: System::Windows::Forms::DataGridView^ dataGridViewLibrary;
-	protected:
-
 	private: System::Windows::Forms::MenuStrip^ menuMain;
-	protected:
-
-	protected:
-
 	private: System::Windows::Forms::ToolStripMenuItem^ mmiFile;
 	private: System::Windows::Forms::ToolStripMenuItem^ mmiFilter;
-
-
 	private: System::Windows::Forms::ToolStripMenuItem^ mmiOpen;
 	private: System::Windows::Forms::ToolStripMenuItem^ mmiSave;
 	private: System::Windows::Forms::ToolStripMenuItem^ mmiSaveAs;
 	private: System::Windows::Forms::OpenFileDialog^ openFileDialogLibrary;
 	private: System::Windows::Forms::SaveFileDialog^ saveFileDialogLibrary;
-
-
-
-
-
-
-
+  
 	private:
 		/// <summary>
 		/// Required designer variable.
@@ -178,9 +166,10 @@ namespace CppCLRWinFormsProject {
 		dataGridViewLibrary->Rows->Clear();
 		if (System::Windows::Forms::DialogResult::OK != openFileDialogLibrary->ShowDialog()) return;
 
-		fileName = openFileDialogLibrary->FileName;
-		Text = L"Бібліотека" + " (файл:" + fileName + ")";
-		books = eventsHandler->LoadFile(fileName, dataGridViewLibrary);
+		String^ fileName = openFileDialogLibrary->FileName;
+		Text = L"Бібліотека" + L" (файл:" + fileName + ")";
+		EventsHandler().LoadFile(msclr::interop::marshal_as<std::string>(fileName), dataGridViewLibrary);
+
 	}
 	private: System::Void зберегтиToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
 	{
@@ -188,7 +177,11 @@ namespace CppCLRWinFormsProject {
 	}
 	private: System::Void зберегтиЯкToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
 	{
-		eventsHandler->SaveFile(books, saveFileDialogLibrary);
+		if (System::Windows::Forms::DialogResult::OK != saveFileDialogLibrary->ShowDialog()) return;
+
+		String^ fileName = saveFileDialogLibrary->FileName;
+		Text = L"Бібліотека" + L" (файл:" + fileName + ")";
+		EventsHandler().SaveFile(msclr::interop::marshal_as<std::string>(fileName));
 	}
 	};
 }

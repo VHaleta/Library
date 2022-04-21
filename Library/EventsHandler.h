@@ -15,8 +15,11 @@ using namespace std;
 
 ref class EventsHandler
 {
+private:
+	static string fileName;
+	static vector<Book> books;
 public:
-	vector<Book>* LoadFile(String^ fileName, DataGridView^ dataGridView);
-	void SaveFile(vector<Book>* books, SaveFileDialog^ saveFileDialog);
-	void SaveFile(vector<Book>* books, String^ fileName);
+	void LoadFile(string fileName, DataGridView^ dataGridView);
+	void SaveFile();
+	void SaveFile(string fileName);
 };
