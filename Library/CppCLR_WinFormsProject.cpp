@@ -6,6 +6,7 @@ using namespace System::Windows::Forms;
 
 string EventsHandler::fileName = "default";
 vector<Book> EventsHandler::books = vector<Book>{};
+bool EventsHandler::opened = false;
 
 [STAThread]
 int main()

@@ -13,13 +13,24 @@ using namespace System::Data;
 using namespace System::Drawing;
 using namespace std;
 
-ref class EventsHandler
+class EventsHandler
 {
 private:
 	static string fileName;
 	static vector<Book> books;
 public:
+	static bool opened;
+public:
 	void LoadFile(string fileName, DataGridView^ dataGridView);
 	void SaveFile();
 	void SaveFile(string fileName);
+	void Clear();
+	void LoadBook(int index, TextBox^ textBoxName, TextBox^ textBoxAuthor, TextBox^ textBoxPubl, TextBox^ textBoxPages, TextBox^ textBoxYear);
+private:
+	string StrConvert(String^ str) {
+		return msclr::interop::marshal_as<string>(str);
+	}
+	String^ StrConvert(string str) {
+		return msclr::interop::marshal_as<String^>(str);
+	}
 };

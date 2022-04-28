@@ -5,8 +5,8 @@ class Book
 public:
 	std::string name;
 	std::string author;
-	//std::string Description;
-	//std::string PublishingHouse;
-	//int Pages;
-	//int Year;
+	std::string description;
+	std::string publishingHouse;
+	int pages;
+	int year;
 };

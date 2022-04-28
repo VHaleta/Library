@@ -19,7 +19,11 @@ void to_json(json& j, const TempData& temp) {
 	for (int i = 0; i < temp.books.size(); i++)
 	{
 		sj += json{ {"name", temp.books[i].name},
-		{"author", temp.books[i].author} };
+			{"author", temp.books[i].author},
+			{"description", temp.books[i].description},
+			{"publishingHouse",temp.books[i].publishingHouse},
+			{"pages", temp.books[i].pages},
+			{"year", temp.books[i].year} };
 	}
 
 	j["books"] = sj;
@@ -28,6 +32,10 @@ void to_json(json& j, const TempData& temp) {
 void from_json(const json& j, Book& b) {
 	b.name = j.at("name");
 	b.author = j.at("author");
+	b.description = j.at("description");
+	b.publishingHouse = j.at("publishingHouse");
+	b.pages = j.at("pages");
+	b.year = j.at("year");
 }
 
 void from_json(const json& j, TempData& t) {
