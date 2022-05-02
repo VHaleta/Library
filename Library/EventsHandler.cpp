@@ -57,6 +57,12 @@ void EventsHandler::DeleteBook(int index)
 	books.erase(books.begin() + index);
 }
 
+void EventsHandler::CreateBook()
+{
+	Book b;
+	books.push_back(b);
+}
+
 void EventsHandler::Clear()
 {
 	fileName == "default";

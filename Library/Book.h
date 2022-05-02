@@ -9,4 +9,11 @@ public:
 	std::string publishingHouse;
 	int pages;
 	int year;
+	Book() :
+		name("book name"),
+		author("book author"),
+		description("book description"),
+		publishingHouse("publishing house"),
+		pages(0),
+		year(0) {};
 };

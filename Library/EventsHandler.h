@@ -29,6 +29,7 @@ public:
 	void LoadBook(int index, TextBox^ textBoxName, TextBox^ textBoxAuthor, TextBox^ textBoxPubl, TextBox^ textBoxPages, TextBox^ textBoxYear);
 	void SaveBook(int index, TextBox^ textBoxName, TextBox^ textBoxAuthor, TextBox^ textBoxPubl, TextBox^ textBoxPages, TextBox^ textBoxYear);
 	void DeleteBook(int index);
+	void CreateBook();
 private:
 	string StrConvert(String^ str) {
 		return msclr::interop::marshal_as<string>(str);

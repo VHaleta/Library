@@ -354,6 +354,7 @@ namespace CppCLRWinFormsProject {
 			this->buttonNew->TabIndex = 9;
 			this->buttonNew->Text = L"Створити книгу";
 			this->buttonNew->UseVisualStyleBackColor = true;
+			this->buttonNew->Click += gcnew System::EventHandler(this, &MainForm::buttonNew_Click);
 			// 
 			// MainForm
 			// 
@@ -387,15 +388,13 @@ namespace CppCLRWinFormsProject {
 	private: System::Void OpenToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		EventsHandler ev;
-		dataGridViewLibrary->Rows->Clear();
 		ev.Clear();
 		if (System::Windows::Forms::DialogResult::OK != openFileDialogLibrary->ShowDialog()) return;
 
 		String^ fileName = openFileDialogLibrary->FileName;
 		Text = L"Бібліотека" + L" (файл:" + fileName + ")";
 		ev.LoadFile(msclr::interop::marshal_as<std::string>(fileName));
-		ev.LoadDataGridView(dataGridViewLibrary);
-		buttonNew->Enabled = true;
+		UpdateDataGridView(0);
 	}
 	private: System::Void SaveToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
 	{
@@ -435,15 +434,6 @@ namespace CppCLRWinFormsProject {
 		groupBoxBook->Enabled = true;
 		buttonSave->Enabled = false;
 	}
-	private: System::Void TextBoxClear()
-	{
-		textBoxName->Text = "";
-		textBoxAuthor->Text = "";
-		textBoxPubl->Text = "";
-		textBoxPages->Text = "";
-		textBoxYear->Text = "";
-
-	}
 	private: System::Void textBoxName_TextChanged(System::Object^ sender, System::EventArgs^ e)
 	{
 		buttonSave->Enabled = true;
@@ -469,20 +459,36 @@ namespace CppCLRWinFormsProject {
 		EventsHandler ev;
 		int index = dataGridViewLibrary->SelectedCells[0]->RowIndex;
 		ev.SaveBook(index, textBoxName, textBoxAuthor, textBoxPubl, textBoxPages, textBoxYear);
-		dataGridViewLibrary->Rows->Clear();
-		ev.LoadDataGridView(dataGridViewLibrary);
-		dataGridViewLibrary->ClearSelection();
-		dataGridViewLibrary->Rows[index]->Selected = true;
-		buttonSave->Enabled = false;
+		UpdateDataGridView(index);
 	}
 	private: System::Void buttonDelete_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		EventsHandler ev;
 		ev.DeleteBook(dataGridViewLibrary->SelectedCells[0]->RowIndex);
-		dataGridViewLibrary->ClearSelection();
+		UpdateDataGridView(0);
+	}
+	private: System::Void buttonNew_Click(System::Object^ sender, System::EventArgs^ e)
+	{
+		EventsHandler ev;
+		ev.CreateBook();
+		UpdateDataGridView(dataGridViewLibrary->RowCount);
+	}
+	private: System::Void TextBoxClear()
+	{
+		textBoxName->Text = "";
+		textBoxAuthor->Text = "";
+		textBoxPubl->Text = "";
+		textBoxPages->Text = "";
+		textBoxYear->Text = "";
+	}
+	private: System::Void UpdateDataGridView(int selectionIndex)
+	{
 		dataGridViewLibrary->Rows->Clear();
-		ev.LoadDataGridView(dataGridViewLibrary);
+		EventsHandler().LoadDataGridView(dataGridViewLibrary);
+		dataGridViewLibrary->ClearSelection();
+		dataGridViewLibrary->Rows[selectionIndex]->Selected = true;
 		buttonSave->Enabled = false;
+		buttonNew->Enabled = true;
 	}
 	};
 }
