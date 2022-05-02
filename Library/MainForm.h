@@ -24,6 +24,8 @@ namespace CppCLRWinFormsProject {
 			dataGridViewLibrary->Columns->Add("author", "Author");
 			dataGridViewLibrary->Columns[0]->Width = 400;
 			dataGridViewLibrary->Columns[1]->Width = 400;
+			dataGridViewLibrary->Columns[0]->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
+			dataGridViewLibrary->Columns[1]->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
 			buttonNew->Enabled = false;
 			groupBoxBook->Enabled = false;
 		}
@@ -57,11 +59,13 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::Label^ label5;
 	private: System::Windows::Forms::TextBox^ textBoxPages;
 	private: System::Windows::Forms::RichTextBox^ richTextBox1;
-	private: System::Windows::Forms::ToolStripMenuItem^ створитиНовийToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ mmiCreateNew;
+
 	private: System::Windows::Forms::Button^ buttonDelete;
 	private: System::Windows::Forms::Button^ buttonSave;
 	private: System::Windows::Forms::Button^ buttonNew;
-	private: System::Windows::Forms::ToolStripMenuItem^ закритиToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ mmiClose;
+
 
 
 
@@ -85,8 +89,8 @@ namespace CppCLRWinFormsProject {
 			this->mmiOpen = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mmiSave = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mmiSaveAs = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->створитиНовийToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->закритиToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->mmiCreateNew = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->mmiClose = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mmiFilter = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openFileDialogLibrary = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->saveFileDialogLibrary = (gcnew System::Windows::Forms::SaveFileDialog());
@@ -154,7 +158,7 @@ namespace CppCLRWinFormsProject {
 			// 
 			this->mmiFile->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(5) {
 				this->mmiOpen, this->mmiSave,
-					this->mmiSaveAs, this->створитиНовийToolStripMenuItem, this->закритиToolStripMenuItem
+					this->mmiSaveAs, this->mmiCreateNew, this->mmiClose
 			});
 			this->mmiFile->Name = L"mmiFile";
 			this->mmiFile->Size = System::Drawing::Size(74, 32);
@@ -165,34 +169,36 @@ namespace CppCLRWinFormsProject {
 			this->mmiOpen->Name = L"mmiOpen";
 			this->mmiOpen->Size = System::Drawing::Size(249, 32);
 			this->mmiOpen->Text = L"Відкрити";
-			this->mmiOpen->Click += gcnew System::EventHandler(this, &MainForm::відкритиToolStripMenuItem_Click);
+			this->mmiOpen->Click += gcnew System::EventHandler(this, &MainForm::OpenToolStripMenuItem_Click);
 			// 
 			// mmiSave
 			// 
 			this->mmiSave->Name = L"mmiSave";
 			this->mmiSave->Size = System::Drawing::Size(249, 32);
 			this->mmiSave->Text = L"Зберегти";
-			this->mmiSave->Click += gcnew System::EventHandler(this, &MainForm::зберегтиToolStripMenuItem_Click);
+			this->mmiSave->Click += gcnew System::EventHandler(this, &MainForm::SaveToolStripMenuItem_Click);
 			// 
 			// mmiSaveAs
 			// 
 			this->mmiSaveAs->Name = L"mmiSaveAs";
 			this->mmiSaveAs->Size = System::Drawing::Size(249, 32);
 			this->mmiSaveAs->Text = L"Зберегти як...";
-			this->mmiSaveAs->Click += gcnew System::EventHandler(this, &MainForm::зберегтиЯкToolStripMenuItem_Click);
+			this->mmiSaveAs->Click += gcnew System::EventHandler(this, &MainForm::SaveAsToolStripMenuItem_Click);
 			// 
-			// створитиНовийToolStripMenuItem
+			// mmiCreateNew
 			// 
-			this->створитиНовийToolStripMenuItem->Name = L"створитиНовийToolStripMenuItem";
-			this->створитиНовийToolStripMenuItem->Size = System::Drawing::Size(249, 32);
-			this->створитиНовийToolStripMenuItem->Text = L"Створити новий";
+			this->mmiCreateNew->Enabled = false;
+			this->mmiCreateNew->Name = L"mmiCreateNew";
+			this->mmiCreateNew->Size = System::Drawing::Size(249, 32);
+			this->mmiCreateNew->Text = L"Створити новий";
+			this->mmiCreateNew->Click += gcnew System::EventHandler(this, &MainForm::CreateNewToolStripMenuItem_Click);
 			// 
-			// закритиToolStripMenuItem
+			// mmiClose
 			// 
-			this->закритиToolStripMenuItem->Name = L"закритиToolStripMenuItem";
-			this->закритиToolStripMenuItem->Size = System::Drawing::Size(249, 32);
-			this->закритиToolStripMenuItem->Text = L"Закрити";
-			this->закритиToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::закритиToolStripMenuItem_Click);
+			this->mmiClose->Name = L"mmiClose";
+			this->mmiClose->Size = System::Drawing::Size(249, 32);
+			this->mmiClose->Text = L"Закрити";
+			this->mmiClose->Click += gcnew System::EventHandler(this, &MainForm::CloseToolStripMenuItem_Click);
 			// 
 			// mmiFilter
 			// 
@@ -219,6 +225,7 @@ namespace CppCLRWinFormsProject {
 			this->textBoxName->Name = L"textBoxName";
 			this->textBoxName->Size = System::Drawing::Size(261, 34);
 			this->textBoxName->TabIndex = 3;
+			this->textBoxName->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxName_TextChanged);
 			// 
 			// textBoxAuthor
 			// 
@@ -226,6 +233,7 @@ namespace CppCLRWinFormsProject {
 			this->textBoxAuthor->Name = L"textBoxAuthor";
 			this->textBoxAuthor->Size = System::Drawing::Size(261, 34);
 			this->textBoxAuthor->TabIndex = 5;
+			this->textBoxAuthor->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxAuthor_TextChanged);
 			// 
 			// label2
 			// 
@@ -242,6 +250,7 @@ namespace CppCLRWinFormsProject {
 			this->textBoxPubl->Name = L"textBoxPubl";
 			this->textBoxPubl->Size = System::Drawing::Size(261, 34);
 			this->textBoxPubl->TabIndex = 7;
+			this->textBoxPubl->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxPubl_TextChanged);
 			// 
 			// label3
 			// 
@@ -282,6 +291,7 @@ namespace CppCLRWinFormsProject {
 			this->buttonDelete->TabIndex = 14;
 			this->buttonDelete->Text = L"Видалити книгу";
 			this->buttonDelete->UseVisualStyleBackColor = true;
+			this->buttonDelete->Click += gcnew System::EventHandler(this, &MainForm::buttonDelete_Click);
 			// 
 			// buttonSave
 			// 
@@ -291,6 +301,7 @@ namespace CppCLRWinFormsProject {
 			this->buttonSave->TabIndex = 13;
 			this->buttonSave->Text = L"Зберегти зміни";
 			this->buttonSave->UseVisualStyleBackColor = true;
+			this->buttonSave->Click += gcnew System::EventHandler(this, &MainForm::buttonSave_Click);
 			// 
 			// richTextBox1
 			// 
@@ -307,6 +318,7 @@ namespace CppCLRWinFormsProject {
 			this->textBoxYear->Name = L"textBoxYear";
 			this->textBoxYear->Size = System::Drawing::Size(183, 34);
 			this->textBoxYear->TabIndex = 11;
+			this->textBoxYear->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxYear_TextChanged);
 			// 
 			// label5
 			// 
@@ -323,6 +335,7 @@ namespace CppCLRWinFormsProject {
 			this->textBoxPages->Name = L"textBoxPages";
 			this->textBoxPages->Size = System::Drawing::Size(183, 34);
 			this->textBoxPages->TabIndex = 9;
+			this->textBoxPages->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxPages_TextChanged);
 			// 
 			// label4
 			// 
@@ -371,7 +384,7 @@ namespace CppCLRWinFormsProject {
 		}
 #pragma endregion
 #pragma region MenuEvents
-	private: System::Void відкритиToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
+	private: System::Void OpenToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		EventsHandler ev;
 		dataGridViewLibrary->Rows->Clear();
@@ -380,14 +393,15 @@ namespace CppCLRWinFormsProject {
 
 		String^ fileName = openFileDialogLibrary->FileName;
 		Text = L"Бібліотека" + L" (файл:" + fileName + ")";
-		ev.LoadFile(msclr::interop::marshal_as<std::string>(fileName), dataGridViewLibrary);
+		ev.LoadFile(msclr::interop::marshal_as<std::string>(fileName));
+		ev.LoadDataGridView(dataGridViewLibrary);
 		buttonNew->Enabled = true;
 	}
-	private: System::Void зберегтиToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
+	private: System::Void SaveToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		EventsHandler().SaveFile();
 	}
-	private: System::Void зберегтиЯкToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
+	private: System::Void SaveAsToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		if (System::Windows::Forms::DialogResult::OK != saveFileDialogLibrary->ShowDialog()) return;
 
@@ -395,14 +409,20 @@ namespace CppCLRWinFormsProject {
 		Text = L"Бібліотека" + L" (файл:" + fileName + ")";
 		EventsHandler().SaveFile(msclr::interop::marshal_as<std::string>(fileName));
 	}
-	private: System::Void закритиToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
+	private: System::Void CloseToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		EventsHandler ev;
 		ev.Clear();
+		TextBoxClear();
 		dataGridViewLibrary->Rows->Clear();
 		buttonNew->Enabled = false;
 		groupBoxBook->Enabled = false;
 	}
+	private: System::Void CreateNewToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
+	{
+
+	}
+
 #pragma endregion
 
 	private: System::Void dataGridViewLibrary_SelectionChanged(System::Object^ sender, System::EventArgs^ e)
@@ -413,6 +433,56 @@ namespace CppCLRWinFormsProject {
 		dataGridViewLibrary->Rows[index]->Selected = true;
 		EventsHandler().LoadBook(index, textBoxName, textBoxAuthor, textBoxPubl, textBoxPages, textBoxYear);
 		groupBoxBook->Enabled = true;
+		buttonSave->Enabled = false;
+	}
+	private: System::Void TextBoxClear()
+	{
+		textBoxName->Text = "";
+		textBoxAuthor->Text = "";
+		textBoxPubl->Text = "";
+		textBoxPages->Text = "";
+		textBoxYear->Text = "";
+
+	}
+	private: System::Void textBoxName_TextChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+		buttonSave->Enabled = true;
+	}
+	private: System::Void textBoxAuthor_TextChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+		buttonSave->Enabled = true;
+	}
+	private: System::Void textBoxPubl_TextChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+		buttonSave->Enabled = true;
+	}
+	private: System::Void textBoxPages_TextChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+		buttonSave->Enabled = true;
+	}
+	private: System::Void textBoxYear_TextChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+		buttonSave->Enabled = true;
+	}
+	private: System::Void buttonSave_Click(System::Object^ sender, System::EventArgs^ e)
+	{
+		EventsHandler ev;
+		int index = dataGridViewLibrary->SelectedCells[0]->RowIndex;
+		ev.SaveBook(index, textBoxName, textBoxAuthor, textBoxPubl, textBoxPages, textBoxYear);
+		dataGridViewLibrary->Rows->Clear();
+		ev.LoadDataGridView(dataGridViewLibrary);
+		dataGridViewLibrary->ClearSelection();
+		dataGridViewLibrary->Rows[index]->Selected = true;
+		buttonSave->Enabled = false;
+	}
+	private: System::Void buttonDelete_Click(System::Object^ sender, System::EventArgs^ e)
+	{
+		EventsHandler ev;
+		ev.DeleteBook(dataGridViewLibrary->SelectedCells[0]->RowIndex);
+		dataGridViewLibrary->ClearSelection();
+		dataGridViewLibrary->Rows->Clear();
+		ev.LoadDataGridView(dataGridViewLibrary);
+		buttonSave->Enabled = false;
 	}
 	};
 }

@@ -21,11 +21,14 @@ private:
 public:
 	static bool opened;
 public:
-	void LoadFile(string fileName, DataGridView^ dataGridView);
+	void LoadFile(string fileName);
+	void LoadDataGridView(DataGridView^ dataGridView);
 	void SaveFile();
 	void SaveFile(string fileName);
 	void Clear();
 	void LoadBook(int index, TextBox^ textBoxName, TextBox^ textBoxAuthor, TextBox^ textBoxPubl, TextBox^ textBoxPages, TextBox^ textBoxYear);
+	void SaveBook(int index, TextBox^ textBoxName, TextBox^ textBoxAuthor, TextBox^ textBoxPubl, TextBox^ textBoxPages, TextBox^ textBoxYear);
+	void DeleteBook(int index);
 private:
 	string StrConvert(String^ str) {
 		return msclr::interop::marshal_as<string>(str);
