@@ -28,6 +28,16 @@ namespace CppCLRWinFormsProject {
 			dataGridViewLibrary->Columns[1]->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
 			buttonNew->Enabled = false;
 			groupBoxBook->Enabled = false;
+			groupBoxSort->Visible = false;
+			comboBoxSort1->Items->Add(L"Назва");
+			comboBoxSort1->Items->Add(L"Автор");
+			comboBoxSort1->Items->Add(L"Видавництво");
+			comboBoxSort1->Items->Add(L"К-сть сторінок");
+			comboBoxSort1->Items->Add(L"Рік випуску");
+			comboBoxSort2->Enabled = false;
+			comboBoxSort3->Enabled = false;
+			comboBoxSort4->Enabled = false;
+			comboBoxSort5->Enabled = false;
 		}
 	protected:
 		~MainForm()
@@ -40,7 +50,7 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::DataGridView^ dataGridViewLibrary;
 	private: System::Windows::Forms::MenuStrip^ menuMain;
 	private: System::Windows::Forms::ToolStripMenuItem^ mmiFile;
-	private: System::Windows::Forms::ToolStripMenuItem^ mmiFilter;
+
 	private: System::Windows::Forms::ToolStripMenuItem^ mmiOpen;
 	private: System::Windows::Forms::ToolStripMenuItem^ mmiSave;
 	private: System::Windows::Forms::ToolStripMenuItem^ mmiSaveAs;
@@ -66,8 +76,15 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::Button^ buttonNew;
 	private: System::Windows::Forms::ToolStripMenuItem^ mmiClose;
 
-
-
+	private: System::Windows::Forms::TextBox^ textBox1;
+	private: System::Windows::Forms::ToolStripMenuItem^ mmiSort;
+	private: System::Windows::Forms::GroupBox^ groupBoxSort;
+	private: System::Windows::Forms::ComboBox^ comboBoxSort5;
+	private: System::Windows::Forms::ComboBox^ comboBoxSort4;
+	private: System::Windows::Forms::ComboBox^ comboBoxSort3;
+	private: System::Windows::Forms::ComboBox^ comboBoxSort2;
+	private: System::Windows::Forms::ComboBox^ comboBoxSort1;
+	private: System::Windows::Forms::Button^ buttonSortClear;
 
 	private:
 		/// <summary>
@@ -91,7 +108,7 @@ namespace CppCLRWinFormsProject {
 			this->mmiSaveAs = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mmiCreateNew = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mmiClose = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->mmiFilter = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->mmiSort = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openFileDialogLibrary = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->saveFileDialogLibrary = (gcnew System::Windows::Forms::SaveFileDialog());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -109,9 +126,18 @@ namespace CppCLRWinFormsProject {
 			this->textBoxPages = (gcnew System::Windows::Forms::TextBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->buttonNew = (gcnew System::Windows::Forms::Button());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->groupBoxSort = (gcnew System::Windows::Forms::GroupBox());
+			this->buttonSortClear = (gcnew System::Windows::Forms::Button());
+			this->comboBoxSort5 = (gcnew System::Windows::Forms::ComboBox());
+			this->comboBoxSort4 = (gcnew System::Windows::Forms::ComboBox());
+			this->comboBoxSort3 = (gcnew System::Windows::Forms::ComboBox());
+			this->comboBoxSort2 = (gcnew System::Windows::Forms::ComboBox());
+			this->comboBoxSort1 = (gcnew System::Windows::Forms::ComboBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridViewLibrary))->BeginInit();
 			this->menuMain->SuspendLayout();
 			this->groupBoxBook->SuspendLayout();
+			this->groupBoxSort->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// dataGridViewLibrary
@@ -147,10 +173,10 @@ namespace CppCLRWinFormsProject {
 			this->menuMain->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->menuMain->ImageScalingSize = System::Drawing::Size(20, 20);
-			this->menuMain->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) { this->mmiFile, this->mmiFilter });
+			this->menuMain->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) { this->mmiFile, this->mmiSort });
 			this->menuMain->Location = System::Drawing::Point(0, 0);
 			this->menuMain->Name = L"menuMain";
-			this->menuMain->Size = System::Drawing::Size(1283, 36);
+			this->menuMain->Size = System::Drawing::Size(1283, 29);
 			this->menuMain->TabIndex = 1;
 			this->menuMain->Text = L"menuStrip1";
 			// 
@@ -161,50 +187,51 @@ namespace CppCLRWinFormsProject {
 					this->mmiSaveAs, this->mmiCreateNew, this->mmiClose
 			});
 			this->mmiFile->Name = L"mmiFile";
-			this->mmiFile->Size = System::Drawing::Size(74, 32);
+			this->mmiFile->Size = System::Drawing::Size(59, 25);
 			this->mmiFile->Text = L"Файл";
 			// 
 			// mmiOpen
 			// 
 			this->mmiOpen->Name = L"mmiOpen";
-			this->mmiOpen->Size = System::Drawing::Size(249, 32);
+			this->mmiOpen->Size = System::Drawing::Size(196, 26);
 			this->mmiOpen->Text = L"Відкрити";
-			this->mmiOpen->Click += gcnew System::EventHandler(this, &MainForm::OpenToolStripMenuItem_Click);
+			this->mmiOpen->Click += gcnew System::EventHandler(this, &MainForm::mmiOpen_Click);
 			// 
 			// mmiSave
 			// 
 			this->mmiSave->Name = L"mmiSave";
-			this->mmiSave->Size = System::Drawing::Size(249, 32);
+			this->mmiSave->Size = System::Drawing::Size(196, 26);
 			this->mmiSave->Text = L"Зберегти";
-			this->mmiSave->Click += gcnew System::EventHandler(this, &MainForm::SaveToolStripMenuItem_Click);
+			this->mmiSave->Click += gcnew System::EventHandler(this, &MainForm::mmiSave_Click);
 			// 
 			// mmiSaveAs
 			// 
 			this->mmiSaveAs->Name = L"mmiSaveAs";
-			this->mmiSaveAs->Size = System::Drawing::Size(249, 32);
+			this->mmiSaveAs->Size = System::Drawing::Size(196, 26);
 			this->mmiSaveAs->Text = L"Зберегти як...";
-			this->mmiSaveAs->Click += gcnew System::EventHandler(this, &MainForm::SaveAsToolStripMenuItem_Click);
+			this->mmiSaveAs->Click += gcnew System::EventHandler(this, &MainForm::mmiSaveAs_Click);
 			// 
 			// mmiCreateNew
 			// 
 			this->mmiCreateNew->Enabled = false;
 			this->mmiCreateNew->Name = L"mmiCreateNew";
-			this->mmiCreateNew->Size = System::Drawing::Size(249, 32);
+			this->mmiCreateNew->Size = System::Drawing::Size(196, 26);
 			this->mmiCreateNew->Text = L"Створити новий";
-			this->mmiCreateNew->Click += gcnew System::EventHandler(this, &MainForm::CreateNewToolStripMenuItem_Click);
+			this->mmiCreateNew->Click += gcnew System::EventHandler(this, &MainForm::mmiCreateNew_Click);
 			// 
 			// mmiClose
 			// 
 			this->mmiClose->Name = L"mmiClose";
-			this->mmiClose->Size = System::Drawing::Size(249, 32);
+			this->mmiClose->Size = System::Drawing::Size(196, 26);
 			this->mmiClose->Text = L"Закрити";
-			this->mmiClose->Click += gcnew System::EventHandler(this, &MainForm::CloseToolStripMenuItem_Click);
+			this->mmiClose->Click += gcnew System::EventHandler(this, &MainForm::mmiClose_Click);
 			// 
-			// mmiFilter
+			// mmiSort
 			// 
-			this->mmiFilter->Name = L"mmiFilter";
-			this->mmiFilter->Size = System::Drawing::Size(268, 32);
-			this->mmiFilter->Text = L"Сортування/фільтрування";
+			this->mmiSort->Name = L"mmiSort";
+			this->mmiSort->Size = System::Drawing::Size(107, 25);
+			this->mmiSort->Text = L"Сортування";
+			this->mmiSort->Click += gcnew System::EventHandler(this, &MainForm::mmiSort_Click);
 			// 
 			// openFileDialogLibrary
 			// 
@@ -215,7 +242,7 @@ namespace CppCLRWinFormsProject {
 			this->label1->AutoSize = true;
 			this->label1->Location = System::Drawing::Point(78, 36);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(66, 28);
+			this->label1->Size = System::Drawing::Size(52, 21);
 			this->label1->TabIndex = 2;
 			this->label1->Text = L"Назва";
 			// 
@@ -223,7 +250,7 @@ namespace CppCLRWinFormsProject {
 			// 
 			this->textBoxName->Location = System::Drawing::Point(150, 33);
 			this->textBoxName->Name = L"textBoxName";
-			this->textBoxName->Size = System::Drawing::Size(261, 34);
+			this->textBoxName->Size = System::Drawing::Size(261, 29);
 			this->textBoxName->TabIndex = 3;
 			this->textBoxName->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxName_TextChanged);
 			// 
@@ -231,7 +258,7 @@ namespace CppCLRWinFormsProject {
 			// 
 			this->textBoxAuthor->Location = System::Drawing::Point(150, 73);
 			this->textBoxAuthor->Name = L"textBoxAuthor";
-			this->textBoxAuthor->Size = System::Drawing::Size(261, 34);
+			this->textBoxAuthor->Size = System::Drawing::Size(261, 29);
 			this->textBoxAuthor->TabIndex = 5;
 			this->textBoxAuthor->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxAuthor_TextChanged);
 			// 
@@ -240,7 +267,7 @@ namespace CppCLRWinFormsProject {
 			this->label2->AutoSize = true;
 			this->label2->Location = System::Drawing::Point(76, 76);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(68, 28);
+			this->label2->Size = System::Drawing::Size(53, 21);
 			this->label2->TabIndex = 4;
 			this->label2->Text = L"Автор";
 			// 
@@ -248,7 +275,7 @@ namespace CppCLRWinFormsProject {
 			// 
 			this->textBoxPubl->Location = System::Drawing::Point(150, 113);
 			this->textBoxPubl->Name = L"textBoxPubl";
-			this->textBoxPubl->Size = System::Drawing::Size(261, 34);
+			this->textBoxPubl->Size = System::Drawing::Size(261, 29);
 			this->textBoxPubl->TabIndex = 7;
 			this->textBoxPubl->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxPubl_TextChanged);
 			// 
@@ -257,7 +284,7 @@ namespace CppCLRWinFormsProject {
 			this->label3->AutoSize = true;
 			this->label3->Location = System::Drawing::Point(10, 116);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(134, 28);
+			this->label3->Size = System::Drawing::Size(105, 21);
 			this->label3->TabIndex = 6;
 			this->label3->Text = L"Видавництво";
 			// 
@@ -316,7 +343,7 @@ namespace CppCLRWinFormsProject {
 			// 
 			this->textBoxYear->Location = System::Drawing::Point(228, 198);
 			this->textBoxYear->Name = L"textBoxYear";
-			this->textBoxYear->Size = System::Drawing::Size(183, 34);
+			this->textBoxYear->Size = System::Drawing::Size(183, 29);
 			this->textBoxYear->TabIndex = 11;
 			this->textBoxYear->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxYear_TextChanged);
 			// 
@@ -325,7 +352,7 @@ namespace CppCLRWinFormsProject {
 			this->label5->AutoSize = true;
 			this->label5->Location = System::Drawing::Point(105, 201);
 			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(117, 28);
+			this->label5->Size = System::Drawing::Size(92, 21);
 			this->label5->TabIndex = 10;
 			this->label5->Text = L"Рік випуску";
 			// 
@@ -333,7 +360,7 @@ namespace CppCLRWinFormsProject {
 			// 
 			this->textBoxPages->Location = System::Drawing::Point(228, 158);
 			this->textBoxPages->Name = L"textBoxPages";
-			this->textBoxPages->Size = System::Drawing::Size(183, 34);
+			this->textBoxPages->Size = System::Drawing::Size(183, 29);
 			this->textBoxPages->TabIndex = 9;
 			this->textBoxPages->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxPages_TextChanged);
 			// 
@@ -342,7 +369,7 @@ namespace CppCLRWinFormsProject {
 			this->label4->AutoSize = true;
 			this->label4->Location = System::Drawing::Point(45, 161);
 			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(177, 28);
+			this->label4->Size = System::Drawing::Size(139, 21);
 			this->label4->TabIndex = 8;
 			this->label4->Text = L"Кількість сторінок";
 			// 
@@ -356,13 +383,92 @@ namespace CppCLRWinFormsProject {
 			this->buttonNew->UseVisualStyleBackColor = true;
 			this->buttonNew->Click += gcnew System::EventHandler(this, &MainForm::buttonNew_Click);
 			// 
+			// textBox1
+			// 
+			this->textBox1->Location = System::Drawing::Point(424, 24);
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(366, 29);
+			this->textBox1->TabIndex = 10;
+			// 
+			// groupBoxSort
+			// 
+			this->groupBoxSort->Controls->Add(this->buttonSortClear);
+			this->groupBoxSort->Controls->Add(this->comboBoxSort5);
+			this->groupBoxSort->Controls->Add(this->comboBoxSort4);
+			this->groupBoxSort->Controls->Add(this->comboBoxSort3);
+			this->groupBoxSort->Controls->Add(this->comboBoxSort2);
+			this->groupBoxSort->Controls->Add(this->comboBoxSort1);
+			this->groupBoxSort->Location = System::Drawing::Point(69, 32);
+			this->groupBoxSort->Name = L"groupBoxSort";
+			this->groupBoxSort->Size = System::Drawing::Size(227, 254);
+			this->groupBoxSort->TabIndex = 11;
+			this->groupBoxSort->TabStop = false;
+			this->groupBoxSort->Text = L"Сортування";
+			// 
+			// buttonSortClear
+			// 
+			this->buttonSortClear->Location = System::Drawing::Point(29, 206);
+			this->buttonSortClear->Name = L"buttonSortClear";
+			this->buttonSortClear->Size = System::Drawing::Size(168, 36);
+			this->buttonSortClear->TabIndex = 2;
+			this->buttonSortClear->Text = L"Скинути";
+			this->buttonSortClear->UseVisualStyleBackColor = true;
+			this->buttonSortClear->Click += gcnew System::EventHandler(this, &MainForm::buttonSortClear_Click);
+			// 
+			// comboBoxSort5
+			// 
+			this->comboBoxSort5->FormattingEnabled = true;
+			this->comboBoxSort5->Location = System::Drawing::Point(29, 169);
+			this->comboBoxSort5->Name = L"comboBoxSort5";
+			this->comboBoxSort5->Size = System::Drawing::Size(168, 29);
+			this->comboBoxSort5->TabIndex = 1;
+			this->comboBoxSort5->SelectedIndexChanged += gcnew System::EventHandler(this, &MainForm::comboBoxSort5_SelectedIndexChanged);
+			// 
+			// comboBoxSort4
+			// 
+			this->comboBoxSort4->FormattingEnabled = true;
+			this->comboBoxSort4->Location = System::Drawing::Point(29, 134);
+			this->comboBoxSort4->Name = L"comboBoxSort4";
+			this->comboBoxSort4->Size = System::Drawing::Size(168, 29);
+			this->comboBoxSort4->TabIndex = 1;
+			this->comboBoxSort4->SelectedIndexChanged += gcnew System::EventHandler(this, &MainForm::comboBoxSort4_SelectedIndexChanged);
+			// 
+			// comboBoxSort3
+			// 
+			this->comboBoxSort3->FormattingEnabled = true;
+			this->comboBoxSort3->Location = System::Drawing::Point(29, 98);
+			this->comboBoxSort3->Name = L"comboBoxSort3";
+			this->comboBoxSort3->Size = System::Drawing::Size(168, 29);
+			this->comboBoxSort3->TabIndex = 1;
+			this->comboBoxSort3->SelectedIndexChanged += gcnew System::EventHandler(this, &MainForm::comboBoxSort3_SelectedIndexChanged);
+			// 
+			// comboBoxSort2
+			// 
+			this->comboBoxSort2->FormattingEnabled = true;
+			this->comboBoxSort2->Location = System::Drawing::Point(29, 63);
+			this->comboBoxSort2->Name = L"comboBoxSort2";
+			this->comboBoxSort2->Size = System::Drawing::Size(168, 29);
+			this->comboBoxSort2->TabIndex = 1;
+			this->comboBoxSort2->SelectedIndexChanged += gcnew System::EventHandler(this, &MainForm::comboBoxSort2_SelectedIndexChanged);
+			// 
+			// comboBoxSort1
+			// 
+			this->comboBoxSort1->FormattingEnabled = true;
+			this->comboBoxSort1->Location = System::Drawing::Point(29, 28);
+			this->comboBoxSort1->Name = L"comboBoxSort1";
+			this->comboBoxSort1->Size = System::Drawing::Size(168, 29);
+			this->comboBoxSort1->TabIndex = 0;
+			this->comboBoxSort1->SelectedIndexChanged += gcnew System::EventHandler(this, &MainForm::comboBoxSort1_SelectedIndexChanged);
+			// 
 			// MainForm
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(11, 28);
+			this->AutoScaleDimensions = System::Drawing::SizeF(9, 21);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->AutoSize = true;
 			this->BackColor = System::Drawing::SystemColors::Control;
 			this->ClientSize = System::Drawing::Size(1283, 613);
+			this->Controls->Add(this->groupBoxSort);
+			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->buttonNew);
 			this->Controls->Add(this->groupBoxBook);
 			this->Controls->Add(this->dataGridViewLibrary);
@@ -379,13 +485,14 @@ namespace CppCLRWinFormsProject {
 			this->menuMain->PerformLayout();
 			this->groupBoxBook->ResumeLayout(false);
 			this->groupBoxBook->PerformLayout();
+			this->groupBoxSort->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
 #pragma region MenuEvents
-	private: System::Void OpenToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
+	private: System::Void mmiOpen_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		EventsHandler ev;
 		ev.Clear();
@@ -396,11 +503,11 @@ namespace CppCLRWinFormsProject {
 		ev.LoadFile(msclr::interop::marshal_as<std::string>(fileName));
 		UpdateDataGridView(0);
 	}
-	private: System::Void SaveToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
+	private: System::Void mmiSave_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		EventsHandler().SaveFile();
 	}
-	private: System::Void SaveAsToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
+	private: System::Void mmiSaveAs_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		if (System::Windows::Forms::DialogResult::OK != saveFileDialogLibrary->ShowDialog()) return;
 
@@ -408,7 +515,7 @@ namespace CppCLRWinFormsProject {
 		Text = L"Бібліотека" + L" (файл:" + fileName + ")";
 		EventsHandler().SaveFile(msclr::interop::marshal_as<std::string>(fileName));
 	}
-	private: System::Void CloseToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
+	private: System::Void mmiClose_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		EventsHandler ev;
 		ev.Clear();
@@ -417,7 +524,7 @@ namespace CppCLRWinFormsProject {
 		buttonNew->Enabled = false;
 		groupBoxBook->Enabled = false;
 	}
-	private: System::Void CreateNewToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
+	private: System::Void mmiCreateNew_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 
 	}
@@ -490,5 +597,127 @@ namespace CppCLRWinFormsProject {
 		buttonSave->Enabled = false;
 		buttonNew->Enabled = true;
 	}
-	};
+	private: System::Void mmiSort_Click(System::Object^ sender, System::EventArgs^ e) {
+		groupBoxSort->Visible = !groupBoxSort->Visible;
+	}
+	private: System::Void comboBoxSort1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+		comboBoxSort2->Enabled = true;
+		comboBoxSort3->Enabled = false;
+		comboBoxSort4->Enabled = false;
+		comboBoxSort5->Enabled = false;
+		comboBoxSort2->Items->Clear();
+		comboBoxSort3->Items->Clear();
+		comboBoxSort4->Items->Clear();
+		comboBoxSort5->Items->Clear();
+		comboBoxSort2->ResetText();
+		comboBoxSort3->ResetText();
+		comboBoxSort4->ResetText();
+		comboBoxSort5->ResetText();
+		UpdateComboBoxSave(1);
+	}
+	private: System::Void UpdateComboBoxSave(int c)
+	{
+		List<String^>^ l = gcnew List<String^>();
+		Dictionary<String^, bool> add;
+		const int n = 5;
+		l->Add(L"Назва");
+		l->Add(L"Автор");
+		l->Add(L"Видавництво");
+		l->Add(L"К-сть сторінок");
+		l->Add(L"Рік випуску");
+
+		add.Add(l[0], true);
+		add.Add(l[1], true);
+		add.Add(l[2], true);
+		add.Add(l[3], true);
+		add.Add(l[4], true);
+		add.Add("", false);
+
+
+		switch (c)
+		{
+		case 1:
+			add[comboBoxSort1->SelectedItem->ToString()] = false;
+			for (int i = 0; i < n; i++)
+				if (add[l[i]]) comboBoxSort2->Items->Add(l[i]);
+			break;
+		case 2:
+			add[comboBoxSort1->SelectedItem->ToString()] = false;
+			add[comboBoxSort2->SelectedItem->ToString()] = false;
+			for (int i = 0; i < n; i++)
+				if (add[l[i]]) comboBoxSort3->Items->Add(l[i]);
+			break;
+		case 3:
+			add[comboBoxSort1->SelectedItem->ToString()] = false;
+			add[comboBoxSort2->SelectedItem->ToString()] = false;
+			add[comboBoxSort3->SelectedItem->ToString()] = false;
+			for (int i = 0; i < n; i++)
+				if (add[l[i]]) comboBoxSort4->Items->Add(l[i]);
+			break;
+		case 4:
+			add[comboBoxSort1->SelectedItem->ToString()] = false;
+			add[comboBoxSort2->SelectedItem->ToString()] = false;
+			add[comboBoxSort3->SelectedItem->ToString()] = false;
+			add[comboBoxSort4->SelectedItem->ToString()] = false;
+			for (int i = 0; i < n; i++)
+				if (add[l[i]]) comboBoxSort5->Items->Add(l[i]);
+			break;
+		default:
+			break;
+		}
+
+
+	}
+	private: System::Void comboBoxSort2_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+		comboBoxSort3->Enabled = true;
+		comboBoxSort4->Enabled = false;
+		comboBoxSort5->Enabled = false;
+		comboBoxSort3->Items->Clear();
+		comboBoxSort4->Items->Clear();
+		comboBoxSort5->Items->Clear();
+		comboBoxSort3->ResetText();
+		comboBoxSort4->ResetText();
+		comboBoxSort5->ResetText();
+		UpdateComboBoxSave(2);
+	}
+	private: System::Void comboBoxSort3_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+		comboBoxSort4->Enabled = true;
+		comboBoxSort5->Enabled = false;
+		comboBoxSort4->Items->Clear();
+		comboBoxSort5->Items->Clear();
+		comboBoxSort4->ResetText();
+		comboBoxSort5->ResetText();
+		UpdateComboBoxSave(3);
+	}
+	private: System::Void comboBoxSort4_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+		comboBoxSort5->Enabled = true;
+		comboBoxSort5->Items->Clear();
+		comboBoxSort5->ResetText();
+		UpdateComboBoxSave(4);
+	}
+	private: System::Void comboBoxSort5_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+
+	}
+	private: System::Void buttonSortClear_Click(System::Object^ sender, System::EventArgs^ e)
+	{
+		comboBoxSort2->Enabled = false;
+		comboBoxSort3->Enabled = false;
+		comboBoxSort4->Enabled = false;
+		comboBoxSort5->Enabled = false;
+		comboBoxSort2->Items->Clear();
+		comboBoxSort3->Items->Clear();
+		comboBoxSort4->Items->Clear();
+		comboBoxSort5->Items->Clear();
+		comboBoxSort1->ResetText();
+		comboBoxSort2->ResetText();
+		comboBoxSort3->ResetText();
+		comboBoxSort4->ResetText();
+		comboBoxSort5->ResetText();
+	}
+};
 }

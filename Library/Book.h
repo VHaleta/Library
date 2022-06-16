@@ -10,7 +10,7 @@ public:
 	int pages;
 	int year;
 	Book() :
-		name("book name"),
+		name("new book name"),
 		author("book author"),
 		description("book description"),
 		publishingHouse("publishing house"),
