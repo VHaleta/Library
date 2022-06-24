@@ -1,6 +1,6 @@
 #include <string>
 #pragma once
-class Book 
+class Book
 {
 public:
 	std::string name;
@@ -16,4 +16,22 @@ public:
 		publishingHouse("publishing house"),
 		pages(0),
 		year(0) {};
+	Book& operator=(const Book& obj) {
+		name = obj.name;
+		author = obj.author;
+		publishingHouse = obj.publishingHouse;
+		description = obj.description;
+		pages = obj.pages;
+		year = obj.year;
+		return *this;
+	}
+	bool operator==(const Book& obj1) const
+	{
+		return (name == obj1.name &&
+			author == obj1.author &&
+			publishingHouse == obj1.publishingHouse &&
+			description == obj1.description &&
+			pages == pages &&
+			year == obj1.year);
+	}
 };

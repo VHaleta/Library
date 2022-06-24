@@ -29,11 +29,11 @@ namespace CppCLRWinFormsProject {
 			buttonNew->Enabled = false;
 			groupBoxBook->Enabled = false;
 			groupBoxSort->Visible = false;
-			comboBoxSort1->Items->Add(L"Назва");
-			comboBoxSort1->Items->Add(L"Автор");
-			comboBoxSort1->Items->Add(L"Видавництво");
-			comboBoxSort1->Items->Add(L"К-сть сторінок");
-			comboBoxSort1->Items->Add(L"Рік випуску");
+			comboBoxSort1->Items->Add(L"Name");
+			comboBoxSort1->Items->Add(L"Author");
+			comboBoxSort1->Items->Add(L"Publishing House");
+			comboBoxSort1->Items->Add(L"Pages");
+			comboBoxSort1->Items->Add(L"Year");
 			comboBoxSort2->Enabled = false;
 			comboBoxSort3->Enabled = false;
 			comboBoxSort4->Enabled = false;
@@ -70,9 +70,11 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::TextBox^ textBoxPages;
 	private: System::Windows::Forms::RichTextBox^ richTextBox1;
 	private: System::Windows::Forms::ToolStripMenuItem^ mmiCreateNew;
+	private: System::Windows::Forms::Button^ buttonDeleteBook;
 
-	private: System::Windows::Forms::Button^ buttonDelete;
-	private: System::Windows::Forms::Button^ buttonSave;
+
+	private: System::Windows::Forms::Button^ buttonSaveBook;
+
 	private: System::Windows::Forms::Button^ buttonNew;
 	private: System::Windows::Forms::ToolStripMenuItem^ mmiClose;
 
@@ -99,7 +101,7 @@ namespace CppCLRWinFormsProject {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle3 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			this->dataGridViewLibrary = (gcnew System::Windows::Forms::DataGridView());
 			this->menuMain = (gcnew System::Windows::Forms::MenuStrip());
 			this->mmiFile = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -118,8 +120,8 @@ namespace CppCLRWinFormsProject {
 			this->textBoxPubl = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->groupBoxBook = (gcnew System::Windows::Forms::GroupBox());
-			this->buttonDelete = (gcnew System::Windows::Forms::Button());
-			this->buttonSave = (gcnew System::Windows::Forms::Button());
+			this->buttonDeleteBook = (gcnew System::Windows::Forms::Button());
+			this->buttonSaveBook = (gcnew System::Windows::Forms::Button());
 			this->richTextBox1 = (gcnew System::Windows::Forms::RichTextBox());
 			this->textBoxYear = (gcnew System::Windows::Forms::TextBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
@@ -146,16 +148,16 @@ namespace CppCLRWinFormsProject {
 			this->dataGridViewLibrary->AllowUserToDeleteRows = false;
 			this->dataGridViewLibrary->AllowUserToResizeColumns = false;
 			this->dataGridViewLibrary->AllowUserToResizeRows = false;
-			dataGridViewCellStyle1->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle1->BackColor = System::Drawing::SystemColors::Control;
-			dataGridViewCellStyle1->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			dataGridViewCellStyle3->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			dataGridViewCellStyle3->BackColor = System::Drawing::SystemColors::Control;
+			dataGridViewCellStyle3->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			dataGridViewCellStyle1->ForeColor = System::Drawing::SystemColors::WindowText;
-			dataGridViewCellStyle1->NullValue = L"d";
-			dataGridViewCellStyle1->SelectionBackColor = System::Drawing::SystemColors::Highlight;
-			dataGridViewCellStyle1->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			dataGridViewCellStyle1->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
-			this->dataGridViewLibrary->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3->ForeColor = System::Drawing::SystemColors::WindowText;
+			dataGridViewCellStyle3->NullValue = L"d";
+			dataGridViewCellStyle3->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			dataGridViewCellStyle3->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			dataGridViewCellStyle3->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			this->dataGridViewLibrary->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
 			this->dataGridViewLibrary->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridViewLibrary->Location = System::Drawing::Point(11, 59);
 			this->dataGridViewLibrary->MultiSelect = false;
@@ -187,50 +189,50 @@ namespace CppCLRWinFormsProject {
 					this->mmiSaveAs, this->mmiCreateNew, this->mmiClose
 			});
 			this->mmiFile->Name = L"mmiFile";
-			this->mmiFile->Size = System::Drawing::Size(59, 25);
-			this->mmiFile->Text = L"Файл";
+			this->mmiFile->Size = System::Drawing::Size(46, 25);
+			this->mmiFile->Text = L"File";
 			// 
 			// mmiOpen
 			// 
 			this->mmiOpen->Name = L"mmiOpen";
-			this->mmiOpen->Size = System::Drawing::Size(196, 26);
-			this->mmiOpen->Text = L"Відкрити";
+			this->mmiOpen->Size = System::Drawing::Size(158, 26);
+			this->mmiOpen->Text = L"Open...";
 			this->mmiOpen->Click += gcnew System::EventHandler(this, &MainForm::mmiOpen_Click);
 			// 
 			// mmiSave
 			// 
 			this->mmiSave->Name = L"mmiSave";
-			this->mmiSave->Size = System::Drawing::Size(196, 26);
-			this->mmiSave->Text = L"Зберегти";
+			this->mmiSave->Size = System::Drawing::Size(158, 26);
+			this->mmiSave->Text = L"Save";
 			this->mmiSave->Click += gcnew System::EventHandler(this, &MainForm::mmiSave_Click);
 			// 
 			// mmiSaveAs
 			// 
 			this->mmiSaveAs->Name = L"mmiSaveAs";
-			this->mmiSaveAs->Size = System::Drawing::Size(196, 26);
-			this->mmiSaveAs->Text = L"Зберегти як...";
+			this->mmiSaveAs->Size = System::Drawing::Size(158, 26);
+			this->mmiSaveAs->Text = L"Save as...";
 			this->mmiSaveAs->Click += gcnew System::EventHandler(this, &MainForm::mmiSaveAs_Click);
 			// 
 			// mmiCreateNew
 			// 
 			this->mmiCreateNew->Enabled = false;
 			this->mmiCreateNew->Name = L"mmiCreateNew";
-			this->mmiCreateNew->Size = System::Drawing::Size(196, 26);
-			this->mmiCreateNew->Text = L"Створити новий";
+			this->mmiCreateNew->Size = System::Drawing::Size(158, 26);
+			this->mmiCreateNew->Text = L"Create new";
 			this->mmiCreateNew->Click += gcnew System::EventHandler(this, &MainForm::mmiCreateNew_Click);
 			// 
 			// mmiClose
 			// 
 			this->mmiClose->Name = L"mmiClose";
-			this->mmiClose->Size = System::Drawing::Size(196, 26);
-			this->mmiClose->Text = L"Закрити";
+			this->mmiClose->Size = System::Drawing::Size(158, 26);
+			this->mmiClose->Text = L"Close";
 			this->mmiClose->Click += gcnew System::EventHandler(this, &MainForm::mmiClose_Click);
 			// 
 			// mmiSort
 			// 
 			this->mmiSort->Name = L"mmiSort";
-			this->mmiSort->Size = System::Drawing::Size(107, 25);
-			this->mmiSort->Text = L"Сортування";
+			this->mmiSort->Size = System::Drawing::Size(73, 25);
+			this->mmiSort->Text = L"Sorting";
 			this->mmiSort->Click += gcnew System::EventHandler(this, &MainForm::mmiSort_Click);
 			// 
 			// openFileDialogLibrary
@@ -240,11 +242,11 @@ namespace CppCLRWinFormsProject {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(78, 36);
+			this->label1->Location = System::Drawing::Point(92, 39);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(52, 21);
 			this->label1->TabIndex = 2;
-			this->label1->Text = L"Назва";
+			this->label1->Text = L"Name";
 			// 
 			// textBoxName
 			// 
@@ -265,11 +267,11 @@ namespace CppCLRWinFormsProject {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(76, 76);
+			this->label2->Location = System::Drawing::Point(86, 79);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(53, 21);
+			this->label2->Size = System::Drawing::Size(58, 21);
 			this->label2->TabIndex = 4;
-			this->label2->Text = L"Автор";
+			this->label2->Text = L"Author";
 			// 
 			// textBoxPubl
 			// 
@@ -282,16 +284,16 @@ namespace CppCLRWinFormsProject {
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(10, 116);
+			this->label3->Location = System::Drawing::Point(13, 116);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(105, 21);
+			this->label3->Size = System::Drawing::Size(131, 21);
 			this->label3->TabIndex = 6;
-			this->label3->Text = L"Видавництво";
+			this->label3->Text = L"Publishing House";
 			// 
 			// groupBoxBook
 			// 
-			this->groupBoxBook->Controls->Add(this->buttonDelete);
-			this->groupBoxBook->Controls->Add(this->buttonSave);
+			this->groupBoxBook->Controls->Add(this->buttonDeleteBook);
+			this->groupBoxBook->Controls->Add(this->buttonSaveBook);
 			this->groupBoxBook->Controls->Add(this->richTextBox1);
 			this->groupBoxBook->Controls->Add(this->textBoxYear);
 			this->groupBoxBook->Controls->Add(this->label5);
@@ -308,27 +310,27 @@ namespace CppCLRWinFormsProject {
 			this->groupBoxBook->Size = System::Drawing::Size(429, 468);
 			this->groupBoxBook->TabIndex = 8;
 			this->groupBoxBook->TabStop = false;
-			this->groupBoxBook->Text = L"Книга";
+			this->groupBoxBook->Text = L"Book";
 			// 
-			// buttonDelete
+			// buttonDeleteBook
 			// 
-			this->buttonDelete->Location = System::Drawing::Point(15, 404);
-			this->buttonDelete->Name = L"buttonDelete";
-			this->buttonDelete->Size = System::Drawing::Size(172, 51);
-			this->buttonDelete->TabIndex = 14;
-			this->buttonDelete->Text = L"Видалити книгу";
-			this->buttonDelete->UseVisualStyleBackColor = true;
-			this->buttonDelete->Click += gcnew System::EventHandler(this, &MainForm::buttonDelete_Click);
+			this->buttonDeleteBook->Location = System::Drawing::Point(15, 404);
+			this->buttonDeleteBook->Name = L"buttonDeleteBook";
+			this->buttonDeleteBook->Size = System::Drawing::Size(172, 51);
+			this->buttonDeleteBook->TabIndex = 14;
+			this->buttonDeleteBook->Text = L"Delete book";
+			this->buttonDeleteBook->UseVisualStyleBackColor = true;
+			this->buttonDeleteBook->Click += gcnew System::EventHandler(this, &MainForm::buttonDeleteBook_Click);
 			// 
-			// buttonSave
+			// buttonSaveBook
 			// 
-			this->buttonSave->Location = System::Drawing::Point(228, 404);
-			this->buttonSave->Name = L"buttonSave";
-			this->buttonSave->Size = System::Drawing::Size(172, 51);
-			this->buttonSave->TabIndex = 13;
-			this->buttonSave->Text = L"Зберегти зміни";
-			this->buttonSave->UseVisualStyleBackColor = true;
-			this->buttonSave->Click += gcnew System::EventHandler(this, &MainForm::buttonSave_Click);
+			this->buttonSaveBook->Location = System::Drawing::Point(228, 404);
+			this->buttonSaveBook->Name = L"buttonSaveBook";
+			this->buttonSaveBook->Size = System::Drawing::Size(172, 51);
+			this->buttonSaveBook->TabIndex = 13;
+			this->buttonSaveBook->Text = L"Save changes";
+			this->buttonSaveBook->UseVisualStyleBackColor = true;
+			this->buttonSaveBook->Click += gcnew System::EventHandler(this, &MainForm::buttonSaveBook_Click);
 			// 
 			// richTextBox1
 			// 
@@ -350,11 +352,11 @@ namespace CppCLRWinFormsProject {
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(105, 201);
+			this->label5->Location = System::Drawing::Point(182, 201);
 			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(92, 21);
+			this->label5->Size = System::Drawing::Size(40, 21);
 			this->label5->TabIndex = 10;
-			this->label5->Text = L"Рік випуску";
+			this->label5->Text = L"Year";
 			// 
 			// textBoxPages
 			// 
@@ -367,11 +369,11 @@ namespace CppCLRWinFormsProject {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(45, 161);
+			this->label4->Location = System::Drawing::Point(172, 161);
 			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(139, 21);
+			this->label4->Size = System::Drawing::Size(50, 21);
 			this->label4->TabIndex = 8;
-			this->label4->Text = L"Кількість сторінок";
+			this->label4->Text = L"Pages";
 			// 
 			// buttonNew
 			// 
@@ -379,7 +381,7 @@ namespace CppCLRWinFormsProject {
 			this->buttonNew->Name = L"buttonNew";
 			this->buttonNew->Size = System::Drawing::Size(199, 43);
 			this->buttonNew->TabIndex = 9;
-			this->buttonNew->Text = L"Створити книгу";
+			this->buttonNew->Text = L"Create book";
 			this->buttonNew->UseVisualStyleBackColor = true;
 			this->buttonNew->Click += gcnew System::EventHandler(this, &MainForm::buttonNew_Click);
 			// 
@@ -403,7 +405,7 @@ namespace CppCLRWinFormsProject {
 			this->groupBoxSort->Size = System::Drawing::Size(227, 254);
 			this->groupBoxSort->TabIndex = 11;
 			this->groupBoxSort->TabStop = false;
-			this->groupBoxSort->Text = L"Сортування";
+			this->groupBoxSort->Text = L"Sorting";
 			// 
 			// buttonSortClear
 			// 
@@ -411,7 +413,7 @@ namespace CppCLRWinFormsProject {
 			this->buttonSortClear->Name = L"buttonSortClear";
 			this->buttonSortClear->Size = System::Drawing::Size(168, 36);
 			this->buttonSortClear->TabIndex = 2;
-			this->buttonSortClear->Text = L"Скинути";
+			this->buttonSortClear->Text = L"Clear";
 			this->buttonSortClear->UseVisualStyleBackColor = true;
 			this->buttonSortClear->Click += gcnew System::EventHandler(this, &MainForm::buttonSortClear_Click);
 			// 
@@ -491,6 +493,7 @@ namespace CppCLRWinFormsProject {
 
 		}
 #pragma endregion
+
 #pragma region MenuEvents
 	private: System::Void mmiOpen_Click(System::Object^ sender, System::EventArgs^ e)
 	{
@@ -539,36 +542,36 @@ namespace CppCLRWinFormsProject {
 		dataGridViewLibrary->Rows[index]->Selected = true;
 		EventsHandler().LoadBook(index, textBoxName, textBoxAuthor, textBoxPubl, textBoxPages, textBoxYear);
 		groupBoxBook->Enabled = true;
-		buttonSave->Enabled = false;
+		buttonSaveBook->Enabled = false;
 	}
 	private: System::Void textBoxName_TextChanged(System::Object^ sender, System::EventArgs^ e)
 	{
-		buttonSave->Enabled = true;
+		buttonSaveBook->Enabled = true;
 	}
 	private: System::Void textBoxAuthor_TextChanged(System::Object^ sender, System::EventArgs^ e)
 	{
-		buttonSave->Enabled = true;
+		buttonSaveBook->Enabled = true;
 	}
 	private: System::Void textBoxPubl_TextChanged(System::Object^ sender, System::EventArgs^ e)
 	{
-		buttonSave->Enabled = true;
+		buttonSaveBook->Enabled = true;
 	}
 	private: System::Void textBoxPages_TextChanged(System::Object^ sender, System::EventArgs^ e)
 	{
-		buttonSave->Enabled = true;
+		buttonSaveBook->Enabled = true;
 	}
 	private: System::Void textBoxYear_TextChanged(System::Object^ sender, System::EventArgs^ e)
 	{
-		buttonSave->Enabled = true;
+		buttonSaveBook->Enabled = true;
 	}
-	private: System::Void buttonSave_Click(System::Object^ sender, System::EventArgs^ e)
+	private: System::Void buttonSaveBook_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		EventsHandler ev;
 		int index = dataGridViewLibrary->SelectedCells[0]->RowIndex;
 		ev.SaveBook(index, textBoxName, textBoxAuthor, textBoxPubl, textBoxPages, textBoxYear);
 		UpdateDataGridView(index);
 	}
-	private: System::Void buttonDelete_Click(System::Object^ sender, System::EventArgs^ e)
+	private: System::Void buttonDeleteBook_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		EventsHandler ev;
 		ev.DeleteBook(dataGridViewLibrary->SelectedCells[0]->RowIndex);
@@ -591,15 +594,80 @@ namespace CppCLRWinFormsProject {
 	private: System::Void UpdateDataGridView(int selectionIndex)
 	{
 		dataGridViewLibrary->Rows->Clear();
-		EventsHandler().LoadDataGridView(dataGridViewLibrary);
+		List<ComboBox^>^ sort = gcnew List<ComboBox^>();
+		sort->Add(comboBoxSort1);
+		sort->Add(comboBoxSort2);
+		sort->Add(comboBoxSort3);
+		sort->Add(comboBoxSort4);
+		sort->Add(comboBoxSort5);
+		EventsHandler().LoadDataGridView(dataGridViewLibrary, sort);
 		dataGridViewLibrary->ClearSelection();
 		dataGridViewLibrary->Rows[selectionIndex]->Selected = true;
-		buttonSave->Enabled = false;
+		buttonSaveBook->Enabled = false;
 		buttonNew->Enabled = true;
 	}
 	private: System::Void mmiSort_Click(System::Object^ sender, System::EventArgs^ e) {
 		groupBoxSort->Visible = !groupBoxSort->Visible;
 	}
+
+	private: System::Void UpdateComboBoxSave(int c)
+	{
+		List<String^>^ l = gcnew List<String^>();
+		Dictionary<String^, bool> parameters;
+		const int n = 5;
+		l->Add(L"Name");
+		l->Add(L"Author");
+		l->Add(L"Publishing House");
+		l->Add(L"Pages");
+		l->Add(L"Year");
+
+		parameters.Add(l[0], true);
+		parameters.Add(l[1], true);
+		parameters.Add(l[2], true);
+		parameters.Add(l[3], true);
+		parameters.Add(l[4], true);
+		parameters.Add("", false);
+
+
+		switch (c)
+		{
+		case 1:
+			if (comboBoxSort1->SelectedItem == nullptr) return;
+			parameters[comboBoxSort1->SelectedItem->ToString()] = false;
+			for (int i = 0; i < n; i++)
+				if (parameters[l[i]]) comboBoxSort2->Items->Add(l[i]);
+			break;
+		case 2:
+			if (comboBoxSort2->SelectedItem == nullptr) return;
+			parameters[comboBoxSort1->SelectedItem->ToString()] = false;
+			parameters[comboBoxSort2->SelectedItem->ToString()] = false;
+			for (int i = 0; i < n; i++)
+				if (parameters[l[i]]) comboBoxSort3->Items->Add(l[i]);
+			break;
+		case 3:
+			if (comboBoxSort3->SelectedItem == nullptr) return;
+			parameters[comboBoxSort1->SelectedItem->ToString()] = false;
+			parameters[comboBoxSort2->SelectedItem->ToString()] = false;
+			parameters[comboBoxSort3->SelectedItem->ToString()] = false;
+			for (int i = 0; i < n; i++)
+				if (parameters[l[i]]) comboBoxSort4->Items->Add(l[i]);
+			break;
+		case 4:
+			if (comboBoxSort4->SelectedItem == nullptr) return;
+			parameters[comboBoxSort1->SelectedItem->ToString()] = false;
+			parameters[comboBoxSort2->SelectedItem->ToString()] = false;
+			parameters[comboBoxSort3->SelectedItem->ToString()] = false;
+			parameters[comboBoxSort4->SelectedItem->ToString()] = false;
+			for (int i = 0; i < n; i++)
+				if (parameters[l[i]]) comboBoxSort5->Items->Add(l[i]);
+			break;
+		default:
+			break;
+		}
+
+
+	}
+#pragma region comboBoxEvents
 	private: System::Void comboBoxSort1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
 	{
 		comboBoxSort2->Enabled = true;
@@ -610,64 +678,18 @@ namespace CppCLRWinFormsProject {
 		comboBoxSort3->Items->Clear();
 		comboBoxSort4->Items->Clear();
 		comboBoxSort5->Items->Clear();
+		comboBoxSort2->SelectedItem = nullptr;
+		comboBoxSort3->SelectedItem = nullptr;
+		comboBoxSort4->SelectedItem = nullptr;
+		comboBoxSort5->SelectedItem = nullptr;
 		comboBoxSort2->ResetText();
 		comboBoxSort3->ResetText();
 		comboBoxSort4->ResetText();
 		comboBoxSort5->ResetText();
 		UpdateComboBoxSave(1);
-	}
-	private: System::Void UpdateComboBoxSave(int c)
-	{
-		List<String^>^ l = gcnew List<String^>();
-		Dictionary<String^, bool> add;
-		const int n = 5;
-		l->Add(L"Назва");
-		l->Add(L"Автор");
-		l->Add(L"Видавництво");
-		l->Add(L"К-сть сторінок");
-		l->Add(L"Рік випуску");
-
-		add.Add(l[0], true);
-		add.Add(l[1], true);
-		add.Add(l[2], true);
-		add.Add(l[3], true);
-		add.Add(l[4], true);
-		add.Add("", false);
-
-
-		switch (c)
-		{
-		case 1:
-			add[comboBoxSort1->SelectedItem->ToString()] = false;
-			for (int i = 0; i < n; i++)
-				if (add[l[i]]) comboBoxSort2->Items->Add(l[i]);
-			break;
-		case 2:
-			add[comboBoxSort1->SelectedItem->ToString()] = false;
-			add[comboBoxSort2->SelectedItem->ToString()] = false;
-			for (int i = 0; i < n; i++)
-				if (add[l[i]]) comboBoxSort3->Items->Add(l[i]);
-			break;
-		case 3:
-			add[comboBoxSort1->SelectedItem->ToString()] = false;
-			add[comboBoxSort2->SelectedItem->ToString()] = false;
-			add[comboBoxSort3->SelectedItem->ToString()] = false;
-			for (int i = 0; i < n; i++)
-				if (add[l[i]]) comboBoxSort4->Items->Add(l[i]);
-			break;
-		case 4:
-			add[comboBoxSort1->SelectedItem->ToString()] = false;
-			add[comboBoxSort2->SelectedItem->ToString()] = false;
-			add[comboBoxSort3->SelectedItem->ToString()] = false;
-			add[comboBoxSort4->SelectedItem->ToString()] = false;
-			for (int i = 0; i < n; i++)
-				if (add[l[i]]) comboBoxSort5->Items->Add(l[i]);
-			break;
-		default:
-			break;
-		}
-
-
+		if (dataGridViewLibrary->RowCount == 0)
+			return;
+		UpdateDataGridView(0);
 	}
 	private: System::Void comboBoxSort2_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
 	{
@@ -677,10 +699,16 @@ namespace CppCLRWinFormsProject {
 		comboBoxSort3->Items->Clear();
 		comboBoxSort4->Items->Clear();
 		comboBoxSort5->Items->Clear();
+		comboBoxSort3->SelectedItem = nullptr;
+		comboBoxSort4->SelectedItem = nullptr;
+		comboBoxSort5->SelectedItem = nullptr;
 		comboBoxSort3->ResetText();
 		comboBoxSort4->ResetText();
 		comboBoxSort5->ResetText();
 		UpdateComboBoxSave(2);
+		if (dataGridViewLibrary->RowCount == 0)
+			return;
+		UpdateDataGridView(0);
 	}
 	private: System::Void comboBoxSort3_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
 	{
@@ -688,23 +716,44 @@ namespace CppCLRWinFormsProject {
 		comboBoxSort5->Enabled = false;
 		comboBoxSort4->Items->Clear();
 		comboBoxSort5->Items->Clear();
+		comboBoxSort4->SelectedItem = nullptr;
+		comboBoxSort5->SelectedItem = nullptr;
 		comboBoxSort4->ResetText();
 		comboBoxSort5->ResetText();
 		UpdateComboBoxSave(3);
+		if (dataGridViewLibrary->RowCount == 0)
+			return;
+		UpdateDataGridView(0);
 	}
 	private: System::Void comboBoxSort4_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
 	{
 		comboBoxSort5->Enabled = true;
 		comboBoxSort5->Items->Clear();
+		comboBoxSort5->SelectedItem = "";
 		comboBoxSort5->ResetText();
 		UpdateComboBoxSave(4);
+		if (dataGridViewLibrary->RowCount == 0)
+			return;
+		UpdateDataGridView(0);
 	}
 	private: System::Void comboBoxSort5_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
 	{
-
+		if (dataGridViewLibrary->RowCount == 0)
+			return;
+		UpdateDataGridView(0);
 	}
 	private: System::Void buttonSortClear_Click(System::Object^ sender, System::EventArgs^ e)
 	{
+		comboBoxSort1->SelectedItem = nullptr;
+		comboBoxSort2->SelectedItem = nullptr;
+		comboBoxSort3->SelectedItem = nullptr;
+		comboBoxSort4->SelectedItem = nullptr;
+		comboBoxSort5->SelectedItem = nullptr;
+		comboBoxSort1->ResetText();
+		comboBoxSort2->ResetText();
+		comboBoxSort3->ResetText();
+		comboBoxSort4->ResetText();
+		comboBoxSort5->ResetText();
 		comboBoxSort2->Enabled = false;
 		comboBoxSort3->Enabled = false;
 		comboBoxSort4->Enabled = false;
@@ -713,11 +762,10 @@ namespace CppCLRWinFormsProject {
 		comboBoxSort3->Items->Clear();
 		comboBoxSort4->Items->Clear();
 		comboBoxSort5->Items->Clear();
-		comboBoxSort1->ResetText();
-		comboBoxSort2->ResetText();
-		comboBoxSort3->ResetText();
-		comboBoxSort4->ResetText();
-		comboBoxSort5->ResetText();
+		if (dataGridViewLibrary->RowCount == 0)
+			return;
+		UpdateDataGridView(0);
 	}
-};
+#pragma endregion
+	};
 }

@@ -1,11 +1,14 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "MainForm.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
 
 string EventsHandler::fileName = "default";
+vector<Book> EventsHandler::allBooks = vector<Book>{};
 vector<Book> EventsHandler::books = vector<Book>{};
+vector<wstring> EventsHandler::parameters = vector<wstring>{L"Name", L"Author", L"Publishing House", L"Pages", L"Year" };
+vector<string> EventsHandler::sortKeys = vector<string>{};
 bool EventsHandler::opened = false;
 
 [STAThread]
