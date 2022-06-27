@@ -31,7 +31,7 @@ namespace CppCLRWinFormsProject {
 			groupBoxAbout->Visible = false;
 			comboBoxSort1->Items->Add(L"Name");
 			comboBoxSort1->Items->Add(L"Author");
-			comboBoxSort1->Items->Add(L"Publishing House");
+			comboBoxSort1->Items->Add(L"ISBN");
 			comboBoxSort1->Items->Add(L"Pages");
 			comboBoxSort1->Items->Add(L"Year");
 			comboBoxSort2->Enabled = false;
@@ -61,7 +61,8 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::TextBox^ textBoxName;
 	private: System::Windows::Forms::TextBox^ textBoxAuthor;
 	private: System::Windows::Forms::Label^ label2;
-	private: System::Windows::Forms::TextBox^ textBoxPubl;
+	private: System::Windows::Forms::TextBox^ textBoxISBN;
+
 
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::GroupBox^ groupBoxBook;
@@ -144,7 +145,7 @@ namespace CppCLRWinFormsProject {
 			this->textBoxName = (gcnew System::Windows::Forms::TextBox());
 			this->textBoxAuthor = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->textBoxPubl = (gcnew System::Windows::Forms::TextBox());
+			this->textBoxISBN = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->groupBoxBook = (gcnew System::Windows::Forms::GroupBox());
 			this->buttonDeleteBook = (gcnew System::Windows::Forms::Button());
@@ -292,7 +293,7 @@ namespace CppCLRWinFormsProject {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(92, 35);
+			this->label1->Location = System::Drawing::Point(19, 35);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(52, 21);
 			this->label1->TabIndex = 2;
@@ -300,45 +301,45 @@ namespace CppCLRWinFormsProject {
 			// 
 			// textBoxName
 			// 
-			this->textBoxName->Location = System::Drawing::Point(150, 32);
+			this->textBoxName->Location = System::Drawing::Point(77, 32);
 			this->textBoxName->Name = L"textBoxName";
-			this->textBoxName->Size = System::Drawing::Size(181, 29);
+			this->textBoxName->Size = System::Drawing::Size(254, 29);
 			this->textBoxName->TabIndex = 3;
 			this->textBoxName->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxName_TextChanged);
 			// 
 			// textBoxAuthor
 			// 
-			this->textBoxAuthor->Location = System::Drawing::Point(150, 67);
+			this->textBoxAuthor->Location = System::Drawing::Point(77, 67);
 			this->textBoxAuthor->Name = L"textBoxAuthor";
-			this->textBoxAuthor->Size = System::Drawing::Size(181, 29);
+			this->textBoxAuthor->Size = System::Drawing::Size(254, 29);
 			this->textBoxAuthor->TabIndex = 5;
 			this->textBoxAuthor->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxAuthor_TextChanged);
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(86, 70);
+			this->label2->Location = System::Drawing::Point(13, 70);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(58, 21);
 			this->label2->TabIndex = 4;
 			this->label2->Text = L"Author";
 			// 
-			// textBoxPubl
+			// textBoxISBN
 			// 
-			this->textBoxPubl->Location = System::Drawing::Point(150, 102);
-			this->textBoxPubl->Name = L"textBoxPubl";
-			this->textBoxPubl->Size = System::Drawing::Size(181, 29);
-			this->textBoxPubl->TabIndex = 7;
-			this->textBoxPubl->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxPubl_TextChanged);
+			this->textBoxISBN->Location = System::Drawing::Point(77, 102);
+			this->textBoxISBN->Name = L"textBoxISBN";
+			this->textBoxISBN->Size = System::Drawing::Size(254, 29);
+			this->textBoxISBN->TabIndex = 7;
+			this->textBoxISBN->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxISBN_TextChanged);
 			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(13, 105);
+			this->label3->Location = System::Drawing::Point(27, 105);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(131, 21);
+			this->label3->Size = System::Drawing::Size(44, 21);
 			this->label3->TabIndex = 6;
-			this->label3->Text = L"Publishing House";
+			this->label3->Text = L"ISBN";
 			// 
 			// groupBoxBook
 			// 
@@ -350,7 +351,7 @@ namespace CppCLRWinFormsProject {
 			this->groupBoxBook->Controls->Add(this->textBoxPages);
 			this->groupBoxBook->Controls->Add(this->label4);
 			this->groupBoxBook->Controls->Add(this->label1);
-			this->groupBoxBook->Controls->Add(this->textBoxPubl);
+			this->groupBoxBook->Controls->Add(this->textBoxISBN);
 			this->groupBoxBook->Controls->Add(this->textBoxName);
 			this->groupBoxBook->Controls->Add(this->label3);
 			this->groupBoxBook->Controls->Add(this->label2);
@@ -743,7 +744,7 @@ namespace CppCLRWinFormsProject {
 	{
 		buttonSaveBook->Enabled = true;
 	}
-	private: System::Void textBoxPubl_TextChanged(System::Object^ sender, System::EventArgs^ e)
+	private: System::Void textBoxISBN_TextChanged(System::Object^ sender, System::EventArgs^ e)
 	{
 		buttonSaveBook->Enabled = true;
 	}
@@ -761,9 +762,8 @@ namespace CppCLRWinFormsProject {
 	private: System::Void buttonSaveBook_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		EventsHandler ev;
-		int index = dataGridViewLibrary->SelectedCells[0]->RowIndex;
-		ev.SaveBook(index, textBoxName, textBoxAuthor, textBoxPubl, textBoxPages, textBoxYear, richTextBoxDescription);
-		UpdateDataGridView(index);
+		ev.SaveBook(textBoxName, textBoxAuthor, textBoxISBN, textBoxPages, textBoxYear, richTextBoxDescription);
+		UpdateDataGridView(ev.currentBook);
 	}
 	private: System::Void buttonDeleteBook_Click(System::Object^ sender, System::EventArgs^ e)
 	{
@@ -873,7 +873,7 @@ namespace CppCLRWinFormsProject {
 		const int n = 5;
 		l->Add(L"Name");
 		l->Add(L"Author");
-		l->Add(L"Publishing House");
+		l->Add(L"ISBN");
 		l->Add(L"Pages");
 		l->Add(L"Year");
 
@@ -929,7 +929,7 @@ namespace CppCLRWinFormsProject {
 		if (dataGridViewLibrary->SelectedCells->Count < 1) return;
 		index = dataGridViewLibrary->SelectedCells[0]->RowIndex;
 		dataGridViewLibrary->Rows[index]->Selected = true;
-		EventsHandler().LoadBook(index, textBoxName, textBoxAuthor, textBoxPubl, textBoxPages, textBoxYear, richTextBoxDescription);
+		EventsHandler().LoadBook(index, textBoxName, textBoxAuthor, textBoxISBN, textBoxPages, textBoxYear, richTextBoxDescription);
 		groupBoxBook->Enabled = true;
 		buttonSaveBook->Enabled = false;
 	}
@@ -943,7 +943,7 @@ namespace CppCLRWinFormsProject {
 	{
 		textBoxName->Text = "";
 		textBoxAuthor->Text = "";
-		textBoxPubl->Text = "";
+		textBoxISBN->Text = "";
 		textBoxPages->Text = "";
 		textBoxYear->Text = "";
 	}
@@ -1014,5 +1014,5 @@ namespace CppCLRWinFormsProject {
 	private: System::Void linkLabel1_LinkClicked(System::Object^ sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs^ e) {
 		system("start https://github.com/VHaleta/Library");
 	}
-	};
+};
 }

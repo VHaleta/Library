@@ -21,7 +21,7 @@ void EventsHandler::LoadDataGridView(DataGridView^ dataGridView, List<ComboBox^>
 		}
 	}
 	if (books.size() > 1)
-		SortData();
+		QuickSort(0, books.size() - 1);
 	Search(StrConvert(search));
 
 	for (int i = 0; i < books.size(); i++)
@@ -62,25 +62,26 @@ void EventsHandler::SaveFile(string fileName)
 
 void EventsHandler::LoadBook(int index, TextBox^ textBoxName, TextBox^ textBoxAuthor, TextBox^ textBoxPubl, TextBox^ textBoxPages, TextBox^ textBoxYear, RichTextBox^ textBoxDescription)
 {
+	currentBook = index;
 	Book b = books[index];
 	textBoxName->Text = StrConvert(b.name);
 	textBoxAuthor->Text = StrConvert(b.author);
-	textBoxPubl->Text = StrConvert(b.publishingHouse);
+	textBoxPubl->Text = StrConvert(b.ISBN);
 	textBoxDescription->Text = StrConvert(b.description);
 	textBoxPages->Text = StrConvert(to_string(b.pages));
 	textBoxYear->Text = StrConvert(to_string(b.year));
 }
 
-void EventsHandler::SaveBook(int index, TextBox^ textBoxName, TextBox^ textBoxAuthor, TextBox^ textBoxPubl, TextBox^ textBoxPages, TextBox^ textBoxYear, RichTextBox^ textBoxDescription)
+void EventsHandler::SaveBook(TextBox^ textBoxName, TextBox^ textBoxAuthor, TextBox^ textBoxPubl, TextBox^ textBoxPages, TextBox^ textBoxYear, RichTextBox^ textBoxDescription)
 {
-	Book* b = &books[index];
+	Book* b = &books[currentBook];
 	auto itr = std::find(allBooks.begin(), allBooks.end(), *b);
 	if (itr == allBooks.end()) return;
 	int bookIndex = distance(allBooks.begin(), itr);
 
 	b->name = StrConvert(textBoxName->Text);
 	b->author = StrConvert(textBoxAuthor->Text);
-	b->publishingHouse = StrConvert(textBoxPubl->Text);
+	b->ISBN = StrConvert(textBoxPubl->Text);
 	b->pages = atoi(StrConvert(textBoxPages->Text).c_str());
 	b->year = atoi(StrConvert(textBoxYear->Text).c_str());
 	b->description = StrConvert(textBoxDescription->Text);
@@ -115,7 +116,7 @@ int EventsHandler::Key(string key, Book l, Book r)
 		result = l.author.compare(r.author);
 		break;
 	case 2:
-		result = l.publishingHouse.compare(r.publishingHouse);
+		result = l.ISBN.compare(r.ISBN);
 		break;
 	case 3:
 		result = l.pages - r.pages;
@@ -129,20 +130,37 @@ int EventsHandler::Key(string key, Book l, Book r)
 	return result;
 }
 
-void EventsHandler::SortData()
+int EventsHandler::Partition(int low, int high)
 {
-	for (int i = 0; i < books.size() - 1; i++)
-		for (int j = 0; j < books.size() - i - 1; j++)
-			for (int l = 0; l < sortKeys.size(); l++)
-			{
-				int res = Key(sortKeys[l], books[j], books[j + 1]);
-				if (res > 0) {
-					swap(books[j], books[j + 1]);
-					break;
-				}
-				if (res < 0)
-					break;
+	Book pivot = books[high];
+	int i = (low - 1);
+
+	for (int j = low; j <= high - 1; j++)
+	{
+		for (int l = 0; l < sortKeys.size(); l++)
+		{
+			int res = Key(sortKeys[l], books[j], pivot);
+			if (res < 0) {
+				i++;
+				swap(books[i], books[j]);
+				break;
 			}
+			if (res > 0)
+				break;
+		}
+	}
+	swap(books[i + 1], books[high]);
+	return (i + 1);
+}
+
+void EventsHandler::QuickSort(int low, int high)
+{
+	if (low < high)
+	{
+		int pi = Partition(low, high);
+		QuickSort(low, pi - 1);
+		QuickSort(pi + 1, high);
+	}
 }
 
 void EventsHandler::Search(string search)
@@ -166,6 +184,9 @@ void EventsHandler::Search(string search)
 		if (temp.find(search) != string::npos)
 			continue;
 		temp = to_string(books[i].year);
+		if (temp.find(search) != string::npos)
+			continue;
+		temp = books[i].ISBN;
 		if (temp.find(search) != string::npos)
 			continue;
 		books.erase(books.begin() + i);

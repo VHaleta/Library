@@ -21,7 +21,7 @@ void to_json(json& j, const TempData& temp) {
 		sj += json{ {"name", temp.books[i].name},
 			{"author", temp.books[i].author},
 			{"description", temp.books[i].description},
-			{"publishingHouse",temp.books[i].publishingHouse},
+			{"isbn",temp.books[i].ISBN},
 			{"pages", temp.books[i].pages},
 			{"year", temp.books[i].year} };
 	}
@@ -33,7 +33,7 @@ void from_json(const json& j, Book& b) {
 	b.name = j.at("name");
 	b.author = j.at("author");
 	b.description = j.at("description");
-	b.publishingHouse = j.at("publishingHouse");
+	b.ISBN = j.at("isbn");
 	b.pages = j.at("pages");
 	b.year = j.at("year");
 }

@@ -6,20 +6,20 @@ public:
 	std::string name;
 	std::string author;
 	std::string description;
-	std::string publishingHouse;
+	std::string ISBN;
 	int pages;
 	int year;
 	Book() :
 		name("new book name"),
 		author("book author"),
 		description("book description"),
-		publishingHouse("publishing house"),
+		ISBN("0"),
 		pages(0),
 		year(0) {};
 	Book& operator=(const Book& obj) {
 		name = obj.name;
 		author = obj.author;
-		publishingHouse = obj.publishingHouse;
+		ISBN = obj.ISBN;
 		description = obj.description;
 		pages = obj.pages;
 		year = obj.year;
@@ -29,7 +29,7 @@ public:
 	{
 		return (name == obj1.name &&
 			author == obj1.author &&
-			publishingHouse == obj1.publishingHouse &&
+			ISBN == obj1.ISBN &&
 			description == obj1.description &&
 			pages == pages &&
 			year == obj1.year);
