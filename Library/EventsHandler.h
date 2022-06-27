@@ -27,7 +27,7 @@ public:
 	static bool opened;
 public:
 	void LoadFile(string fileName);
-	void LoadDataGridView(DataGridView^ dataGridView, List<ComboBox^>^ sort);
+	void LoadDataGridView(DataGridView^ dataGridView, List<ComboBox^>^ sort, String^ search, List<bool>^ columns);
 	void SaveFile();
 	void SaveFile(string fileName);
 	void Clear();
@@ -43,5 +43,6 @@ private:
 		return msclr::interop::marshal_as<String^>(str);
 	}
 	int Key(string s, Book l, Book r);
-	void SortData(vector<Book>& temp);
+	void SortData();
+	void Search(string search);
 };

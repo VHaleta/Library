@@ -9,7 +9,7 @@ void EventsHandler::LoadFile(string fileName)
 	opened = true;
 }
 
-void EventsHandler::LoadDataGridView(DataGridView^ dataGridView, List<ComboBox^>^ comboBoxes)
+void EventsHandler::LoadDataGridView(DataGridView^ dataGridView, List<ComboBox^>^ comboBoxes, String^ search, List<bool>^ columns)
 {
 	books.clear();
 	copy(allBooks.begin(), allBooks.end(), back_inserter(books));
@@ -20,14 +20,31 @@ void EventsHandler::LoadDataGridView(DataGridView^ dataGridView, List<ComboBox^>
 			sortKeys.push_back(StrConvert(comboBoxes[i]->SelectedItem->ToString()));
 		}
 	}
-
-	SortData(books);
+	if (books.size() > 1)
+		SortData();
+	Search(StrConvert(search));
 
 	for (int i = 0; i < books.size(); i++)
 	{
+		int s = 0;
 		dataGridView->Rows->Add();
-		dataGridView->Rows[i]->Cells[0]->Value = StrConvert(books[i].name);
-		dataGridView->Rows[i]->Cells[1]->Value = StrConvert(books[i].author);
+		if (columns[0])
+		{
+			dataGridView->Rows[i]->Cells[s]->Value = StrConvert(books[i].name);
+			s++;
+		}
+		if (columns[1])
+		{
+			dataGridView->Rows[i]->Cells[s]->Value = StrConvert(books[i].author);
+			s++;
+		}
+		if (columns[2])
+		{
+			dataGridView->Rows[i]->Cells[s]->Value = books[i].pages;
+			s++;
+		}
+		if (columns[3])
+			dataGridView->Rows[i]->Cells[s]->Value = books[i].year;
 	}
 }
 
@@ -110,20 +127,48 @@ int EventsHandler::Key(string key, Book l, Book r)
 	return result;
 }
 
-void EventsHandler::SortData(vector<Book>& temp)
+void EventsHandler::SortData()
 {
- 	for (int i = 0; i < temp.size() - 1; i++)
-		for (int j = 0; j < temp.size() - i - 1; j++)
+	for (int i = 0; i < books.size() - 1; i++)
+		for (int j = 0; j < books.size() - i - 1; j++)
 			for (int l = 0; l < sortKeys.size(); l++)
 			{
-				int res = Key(sortKeys[l], temp[j], temp[j + 1]);
+				int res = Key(sortKeys[l], books[j], books[j + 1]);
 				if (res > 0) {
-					swap(temp[j], temp[j + 1]);
+					swap(books[j], books[j + 1]);
 					break;
 				}
 				if (res < 0)
 					break;
 			}
+}
+
+void EventsHandler::Search(string search)
+{
+	std::transform(search.begin(), search.end(), search.begin(),
+		[](unsigned char c) { return std::tolower(c); });
+	string temp;
+	for (int i = 0; i < books.size(); i++)
+	{
+		temp = books[i].name;
+		std::transform(temp.begin(), temp.end(), temp.begin(),
+			[](unsigned char c) { return std::tolower(c); });
+		if (temp.find(search) != string::npos)
+			continue;
+		temp = books[i].author;
+		std::transform(temp.begin(), temp.end(), temp.begin(),
+			[](unsigned char c) { return std::tolower(c); });
+		if (temp.find(search) != string::npos)
+			continue;
+		temp = to_string(books[i].pages);
+		if (temp.find(search) != string::npos)
+			continue;
+		temp = to_string(books[i].year);
+		if (temp.find(search) != string::npos)
+			continue;
+		books.erase(books.begin() + i);
+		i--;
+	}
 }
 
 void EventsHandler::Clear()

@@ -23,10 +23,9 @@ namespace CppCLRWinFormsProject {
 			dataGridViewLibrary->Columns->Add("name", "Name");
 			dataGridViewLibrary->Columns->Add("author", "Author");
 			dataGridViewLibrary->Columns[0]->Width = 400;
-			dataGridViewLibrary->Columns[1]->Width = 400;
+			dataGridViewLibrary->Columns[1]->Width = 365;
 			dataGridViewLibrary->Columns[0]->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
 			dataGridViewLibrary->Columns[1]->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
-			buttonNew->Enabled = false;
 			groupBoxBook->Enabled = false;
 			groupBoxSort->Visible = false;
 			comboBoxSort1->Items->Add(L"Name");
@@ -38,6 +37,7 @@ namespace CppCLRWinFormsProject {
 			comboBoxSort3->Enabled = false;
 			comboBoxSort4->Enabled = false;
 			comboBoxSort5->Enabled = false;
+			buttonSearch->BackgroundImage = System::Drawing::Image::FromFile(L"res/search_icon.png");
 		}
 	protected:
 		~MainForm()
@@ -77,9 +77,11 @@ namespace CppCLRWinFormsProject {
 
 	private: System::Windows::Forms::Button^ buttonNew;
 	private: System::Windows::Forms::ToolStripMenuItem^ mmiClose;
+	private: System::Windows::Forms::TextBox^ textBoxSearch;
 
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::ToolStripMenuItem^ mmiSort;
+
+	private: System::Windows::Forms::ToolStripMenuItem^ mmiOrderBy;
+
 	private: System::Windows::Forms::GroupBox^ groupBoxSort;
 	private: System::Windows::Forms::ComboBox^ comboBoxSort5;
 	private: System::Windows::Forms::ComboBox^ comboBoxSort4;
@@ -87,12 +89,25 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::ComboBox^ comboBoxSort2;
 	private: System::Windows::Forms::ComboBox^ comboBoxSort1;
 	private: System::Windows::Forms::Button^ buttonSortClear;
+	private: System::Windows::Forms::Button^ buttonApplySort;
+	private: System::Windows::Forms::Button^ buttonSearch;
+	private: System::Windows::Forms::GroupBox^ groupBoxColumns;
+	private: System::Windows::Forms::CheckBox^ checkBoxColYear;
+	private: System::Windows::Forms::CheckBox^ checkBoxColPages;
+	private: System::Windows::Forms::CheckBox^ checkBoxColAuthor;
+	private: System::Windows::Forms::CheckBox^ checkBoxColName;
+	private: System::Windows::Forms::ToolStripMenuItem^ aboutPogramToolStripMenuItem;
+
+
+
+
+
+
+	private: System::ComponentModel::IContainer^ components;
+
 
 	private:
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		System::ComponentModel::Container^ components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -101,7 +116,7 @@ namespace CppCLRWinFormsProject {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle3 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			this->dataGridViewLibrary = (gcnew System::Windows::Forms::DataGridView());
 			this->menuMain = (gcnew System::Windows::Forms::MenuStrip());
 			this->mmiFile = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -110,7 +125,7 @@ namespace CppCLRWinFormsProject {
 			this->mmiSaveAs = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mmiCreateNew = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mmiClose = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->mmiSort = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->mmiOrderBy = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openFileDialogLibrary = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->saveFileDialogLibrary = (gcnew System::Windows::Forms::SaveFileDialog());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -128,18 +143,27 @@ namespace CppCLRWinFormsProject {
 			this->textBoxPages = (gcnew System::Windows::Forms::TextBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->buttonNew = (gcnew System::Windows::Forms::Button());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->textBoxSearch = (gcnew System::Windows::Forms::TextBox());
 			this->groupBoxSort = (gcnew System::Windows::Forms::GroupBox());
+			this->buttonApplySort = (gcnew System::Windows::Forms::Button());
 			this->buttonSortClear = (gcnew System::Windows::Forms::Button());
 			this->comboBoxSort5 = (gcnew System::Windows::Forms::ComboBox());
 			this->comboBoxSort4 = (gcnew System::Windows::Forms::ComboBox());
 			this->comboBoxSort3 = (gcnew System::Windows::Forms::ComboBox());
 			this->comboBoxSort2 = (gcnew System::Windows::Forms::ComboBox());
 			this->comboBoxSort1 = (gcnew System::Windows::Forms::ComboBox());
+			this->buttonSearch = (gcnew System::Windows::Forms::Button());
+			this->groupBoxColumns = (gcnew System::Windows::Forms::GroupBox());
+			this->checkBoxColYear = (gcnew System::Windows::Forms::CheckBox());
+			this->checkBoxColPages = (gcnew System::Windows::Forms::CheckBox());
+			this->checkBoxColAuthor = (gcnew System::Windows::Forms::CheckBox());
+			this->checkBoxColName = (gcnew System::Windows::Forms::CheckBox());
+			this->aboutPogramToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridViewLibrary))->BeginInit();
 			this->menuMain->SuspendLayout();
 			this->groupBoxBook->SuspendLayout();
 			this->groupBoxSort->SuspendLayout();
+			this->groupBoxColumns->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// dataGridViewLibrary
@@ -148,16 +172,16 @@ namespace CppCLRWinFormsProject {
 			this->dataGridViewLibrary->AllowUserToDeleteRows = false;
 			this->dataGridViewLibrary->AllowUserToResizeColumns = false;
 			this->dataGridViewLibrary->AllowUserToResizeRows = false;
-			dataGridViewCellStyle3->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle3->BackColor = System::Drawing::SystemColors::Control;
-			dataGridViewCellStyle3->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			dataGridViewCellStyle1->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			dataGridViewCellStyle1->BackColor = System::Drawing::SystemColors::Control;
+			dataGridViewCellStyle1->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			dataGridViewCellStyle3->ForeColor = System::Drawing::SystemColors::WindowText;
-			dataGridViewCellStyle3->NullValue = L"d";
-			dataGridViewCellStyle3->SelectionBackColor = System::Drawing::SystemColors::Highlight;
-			dataGridViewCellStyle3->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			dataGridViewCellStyle3->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
-			this->dataGridViewLibrary->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle1->ForeColor = System::Drawing::SystemColors::WindowText;
+			dataGridViewCellStyle1->NullValue = L"d";
+			dataGridViewCellStyle1->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			dataGridViewCellStyle1->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			dataGridViewCellStyle1->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			this->dataGridViewLibrary->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this->dataGridViewLibrary->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridViewLibrary->Location = System::Drawing::Point(11, 59);
 			this->dataGridViewLibrary->MultiSelect = false;
@@ -175,10 +199,13 @@ namespace CppCLRWinFormsProject {
 			this->menuMain->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->menuMain->ImageScalingSize = System::Drawing::Size(20, 20);
-			this->menuMain->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) { this->mmiFile, this->mmiSort });
+			this->menuMain->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+				this->mmiFile, this->mmiOrderBy,
+					this->aboutPogramToolStripMenuItem
+			});
 			this->menuMain->Location = System::Drawing::Point(0, 0);
 			this->menuMain->Name = L"menuMain";
-			this->menuMain->Size = System::Drawing::Size(1283, 29);
+			this->menuMain->Size = System::Drawing::Size(1202, 29);
 			this->menuMain->TabIndex = 1;
 			this->menuMain->Text = L"menuStrip1";
 			// 
@@ -215,7 +242,6 @@ namespace CppCLRWinFormsProject {
 			// 
 			// mmiCreateNew
 			// 
-			this->mmiCreateNew->Enabled = false;
 			this->mmiCreateNew->Name = L"mmiCreateNew";
 			this->mmiCreateNew->Size = System::Drawing::Size(158, 26);
 			this->mmiCreateNew->Text = L"Create new";
@@ -228,12 +254,12 @@ namespace CppCLRWinFormsProject {
 			this->mmiClose->Text = L"Close";
 			this->mmiClose->Click += gcnew System::EventHandler(this, &MainForm::mmiClose_Click);
 			// 
-			// mmiSort
+			// mmiOrderBy
 			// 
-			this->mmiSort->Name = L"mmiSort";
-			this->mmiSort->Size = System::Drawing::Size(73, 25);
-			this->mmiSort->Text = L"Sorting";
-			this->mmiSort->Click += gcnew System::EventHandler(this, &MainForm::mmiSort_Click);
+			this->mmiOrderBy->Name = L"mmiOrderBy";
+			this->mmiOrderBy->Size = System::Drawing::Size(80, 25);
+			this->mmiOrderBy->Text = L"OrderBy";
+			this->mmiOrderBy->Click += gcnew System::EventHandler(this, &MainForm::mmiOrderBy_Click);
 			// 
 			// openFileDialogLibrary
 			// 
@@ -242,7 +268,7 @@ namespace CppCLRWinFormsProject {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(92, 39);
+			this->label1->Location = System::Drawing::Point(92, 35);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(52, 21);
 			this->label1->TabIndex = 2;
@@ -250,24 +276,24 @@ namespace CppCLRWinFormsProject {
 			// 
 			// textBoxName
 			// 
-			this->textBoxName->Location = System::Drawing::Point(150, 33);
+			this->textBoxName->Location = System::Drawing::Point(150, 32);
 			this->textBoxName->Name = L"textBoxName";
-			this->textBoxName->Size = System::Drawing::Size(261, 29);
+			this->textBoxName->Size = System::Drawing::Size(181, 29);
 			this->textBoxName->TabIndex = 3;
 			this->textBoxName->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxName_TextChanged);
 			// 
 			// textBoxAuthor
 			// 
-			this->textBoxAuthor->Location = System::Drawing::Point(150, 73);
+			this->textBoxAuthor->Location = System::Drawing::Point(150, 67);
 			this->textBoxAuthor->Name = L"textBoxAuthor";
-			this->textBoxAuthor->Size = System::Drawing::Size(261, 29);
+			this->textBoxAuthor->Size = System::Drawing::Size(181, 29);
 			this->textBoxAuthor->TabIndex = 5;
 			this->textBoxAuthor->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxAuthor_TextChanged);
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(86, 79);
+			this->label2->Location = System::Drawing::Point(86, 70);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(58, 21);
 			this->label2->TabIndex = 4;
@@ -275,16 +301,16 @@ namespace CppCLRWinFormsProject {
 			// 
 			// textBoxPubl
 			// 
-			this->textBoxPubl->Location = System::Drawing::Point(150, 113);
+			this->textBoxPubl->Location = System::Drawing::Point(150, 102);
 			this->textBoxPubl->Name = L"textBoxPubl";
-			this->textBoxPubl->Size = System::Drawing::Size(261, 29);
+			this->textBoxPubl->Size = System::Drawing::Size(181, 29);
 			this->textBoxPubl->TabIndex = 7;
 			this->textBoxPubl->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxPubl_TextChanged);
 			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(13, 116);
+			this->label3->Location = System::Drawing::Point(13, 105);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(131, 21);
 			this->label3->TabIndex = 6;
@@ -305,18 +331,18 @@ namespace CppCLRWinFormsProject {
 			this->groupBoxBook->Controls->Add(this->label3);
 			this->groupBoxBook->Controls->Add(this->label2);
 			this->groupBoxBook->Controls->Add(this->textBoxAuthor);
-			this->groupBoxBook->Location = System::Drawing::Point(842, 130);
+			this->groupBoxBook->Location = System::Drawing::Point(840, 177);
 			this->groupBoxBook->Name = L"groupBoxBook";
-			this->groupBoxBook->Size = System::Drawing::Size(429, 468);
+			this->groupBoxBook->Size = System::Drawing::Size(351, 421);
 			this->groupBoxBook->TabIndex = 8;
 			this->groupBoxBook->TabStop = false;
 			this->groupBoxBook->Text = L"Book";
 			// 
 			// buttonDeleteBook
 			// 
-			this->buttonDeleteBook->Location = System::Drawing::Point(15, 404);
+			this->buttonDeleteBook->Location = System::Drawing::Point(17, 352);
 			this->buttonDeleteBook->Name = L"buttonDeleteBook";
-			this->buttonDeleteBook->Size = System::Drawing::Size(172, 51);
+			this->buttonDeleteBook->Size = System::Drawing::Size(148, 51);
 			this->buttonDeleteBook->TabIndex = 14;
 			this->buttonDeleteBook->Text = L"Delete book";
 			this->buttonDeleteBook->UseVisualStyleBackColor = true;
@@ -324,9 +350,9 @@ namespace CppCLRWinFormsProject {
 			// 
 			// buttonSaveBook
 			// 
-			this->buttonSaveBook->Location = System::Drawing::Point(228, 404);
+			this->buttonSaveBook->Location = System::Drawing::Point(181, 352);
 			this->buttonSaveBook->Name = L"buttonSaveBook";
-			this->buttonSaveBook->Size = System::Drawing::Size(172, 51);
+			this->buttonSaveBook->Size = System::Drawing::Size(148, 51);
 			this->buttonSaveBook->TabIndex = 13;
 			this->buttonSaveBook->Text = L"Save changes";
 			this->buttonSaveBook->UseVisualStyleBackColor = true;
@@ -335,24 +361,24 @@ namespace CppCLRWinFormsProject {
 			// richTextBox1
 			// 
 			this->richTextBox1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->richTextBox1->Location = System::Drawing::Point(6, 252);
+			this->richTextBox1->Location = System::Drawing::Point(6, 200);
 			this->richTextBox1->Name = L"richTextBox1";
-			this->richTextBox1->Size = System::Drawing::Size(405, 146);
+			this->richTextBox1->Size = System::Drawing::Size(333, 146);
 			this->richTextBox1->TabIndex = 12;
 			this->richTextBox1->Text = L"";
 			// 
 			// textBoxYear
 			// 
-			this->textBoxYear->Location = System::Drawing::Point(228, 198);
+			this->textBoxYear->Location = System::Drawing::Point(217, 146);
 			this->textBoxYear->Name = L"textBoxYear";
-			this->textBoxYear->Size = System::Drawing::Size(183, 29);
+			this->textBoxYear->Size = System::Drawing::Size(114, 29);
 			this->textBoxYear->TabIndex = 11;
 			this->textBoxYear->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxYear_TextChanged);
 			// 
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(182, 201);
+			this->label5->Location = System::Drawing::Point(177, 149);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(40, 21);
 			this->label5->TabIndex = 10;
@@ -360,16 +386,16 @@ namespace CppCLRWinFormsProject {
 			// 
 			// textBoxPages
 			// 
-			this->textBoxPages->Location = System::Drawing::Point(228, 158);
+			this->textBoxPages->Location = System::Drawing::Point(57, 146);
 			this->textBoxPages->Name = L"textBoxPages";
-			this->textBoxPages->Size = System::Drawing::Size(183, 29);
+			this->textBoxPages->Size = System::Drawing::Size(114, 29);
 			this->textBoxPages->TabIndex = 9;
 			this->textBoxPages->TextChanged += gcnew System::EventHandler(this, &MainForm::textBoxPages_TextChanged);
 			// 
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(172, 161);
+			this->label4->Location = System::Drawing::Point(6, 149);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(50, 21);
 			this->label4->TabIndex = 8;
@@ -377,23 +403,24 @@ namespace CppCLRWinFormsProject {
 			// 
 			// buttonNew
 			// 
-			this->buttonNew->Location = System::Drawing::Point(848, 81);
+			this->buttonNew->Location = System::Drawing::Point(874, 130);
 			this->buttonNew->Name = L"buttonNew";
-			this->buttonNew->Size = System::Drawing::Size(199, 43);
+			this->buttonNew->Size = System::Drawing::Size(199, 41);
 			this->buttonNew->TabIndex = 9;
 			this->buttonNew->Text = L"Create book";
 			this->buttonNew->UseVisualStyleBackColor = true;
 			this->buttonNew->Click += gcnew System::EventHandler(this, &MainForm::buttonNew_Click);
 			// 
-			// textBox1
+			// textBoxSearch
 			// 
-			this->textBox1->Location = System::Drawing::Point(424, 24);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(366, 29);
-			this->textBox1->TabIndex = 10;
+			this->textBoxSearch->Location = System::Drawing::Point(427, 24);
+			this->textBoxSearch->Name = L"textBoxSearch";
+			this->textBoxSearch->Size = System::Drawing::Size(366, 29);
+			this->textBoxSearch->TabIndex = 10;
 			// 
 			// groupBoxSort
 			// 
+			this->groupBoxSort->Controls->Add(this->buttonApplySort);
 			this->groupBoxSort->Controls->Add(this->buttonSortClear);
 			this->groupBoxSort->Controls->Add(this->comboBoxSort5);
 			this->groupBoxSort->Controls->Add(this->comboBoxSort4);
@@ -405,13 +432,23 @@ namespace CppCLRWinFormsProject {
 			this->groupBoxSort->Size = System::Drawing::Size(227, 254);
 			this->groupBoxSort->TabIndex = 11;
 			this->groupBoxSort->TabStop = false;
-			this->groupBoxSort->Text = L"Sorting";
+			this->groupBoxSort->Text = L"Ordering";
+			// 
+			// buttonApplySort
+			// 
+			this->buttonApplySort->Location = System::Drawing::Point(29, 204);
+			this->buttonApplySort->Name = L"buttonApplySort";
+			this->buttonApplySort->Size = System::Drawing::Size(75, 36);
+			this->buttonApplySort->TabIndex = 12;
+			this->buttonApplySort->Text = L"Apply";
+			this->buttonApplySort->UseVisualStyleBackColor = true;
+			this->buttonApplySort->Click += gcnew System::EventHandler(this, &MainForm::buttonApplySort_Click);
 			// 
 			// buttonSortClear
 			// 
-			this->buttonSortClear->Location = System::Drawing::Point(29, 206);
+			this->buttonSortClear->Location = System::Drawing::Point(122, 204);
 			this->buttonSortClear->Name = L"buttonSortClear";
-			this->buttonSortClear->Size = System::Drawing::Size(168, 36);
+			this->buttonSortClear->Size = System::Drawing::Size(75, 36);
 			this->buttonSortClear->TabIndex = 2;
 			this->buttonSortClear->Text = L"Clear";
 			this->buttonSortClear->UseVisualStyleBackColor = true;
@@ -462,15 +499,94 @@ namespace CppCLRWinFormsProject {
 			this->comboBoxSort1->TabIndex = 0;
 			this->comboBoxSort1->SelectedIndexChanged += gcnew System::EventHandler(this, &MainForm::comboBoxSort1_SelectedIndexChanged);
 			// 
+			// buttonSearch
+			// 
+			this->buttonSearch->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->buttonSearch->Location = System::Drawing::Point(799, 24);
+			this->buttonSearch->Name = L"buttonSearch";
+			this->buttonSearch->Size = System::Drawing::Size(29, 29);
+			this->buttonSearch->TabIndex = 13;
+			this->buttonSearch->UseVisualStyleBackColor = true;
+			this->buttonSearch->Click += gcnew System::EventHandler(this, &MainForm::buttonSearch_Click);
+			// 
+			// groupBoxColumns
+			// 
+			this->groupBoxColumns->Controls->Add(this->checkBoxColYear);
+			this->groupBoxColumns->Controls->Add(this->checkBoxColPages);
+			this->groupBoxColumns->Controls->Add(this->checkBoxColAuthor);
+			this->groupBoxColumns->Controls->Add(this->checkBoxColName);
+			this->groupBoxColumns->Location = System::Drawing::Point(842, 24);
+			this->groupBoxColumns->Name = L"groupBoxColumns";
+			this->groupBoxColumns->Size = System::Drawing::Size(272, 100);
+			this->groupBoxColumns->TabIndex = 14;
+			this->groupBoxColumns->TabStop = false;
+			this->groupBoxColumns->Text = L"Columns";
+			// 
+			// checkBoxColYear
+			// 
+			this->checkBoxColYear->AutoSize = true;
+			this->checkBoxColYear->Location = System::Drawing::Point(122, 59);
+			this->checkBoxColYear->Name = L"checkBoxColYear";
+			this->checkBoxColYear->Size = System::Drawing::Size(59, 25);
+			this->checkBoxColYear->TabIndex = 3;
+			this->checkBoxColYear->Text = L"Year";
+			this->checkBoxColYear->UseVisualStyleBackColor = true;
+			this->checkBoxColYear->CheckedChanged += gcnew System::EventHandler(this, &MainForm::checkBoxColYear_CheckedChanged);
+			// 
+			// checkBoxColPages
+			// 
+			this->checkBoxColPages->AutoSize = true;
+			this->checkBoxColPages->Location = System::Drawing::Point(122, 28);
+			this->checkBoxColPages->Name = L"checkBoxColPages";
+			this->checkBoxColPages->Size = System::Drawing::Size(69, 25);
+			this->checkBoxColPages->TabIndex = 2;
+			this->checkBoxColPages->Text = L"Pages";
+			this->checkBoxColPages->UseVisualStyleBackColor = true;
+			this->checkBoxColPages->CheckedChanged += gcnew System::EventHandler(this, &MainForm::checkBoxColPages_CheckedChanged);
+			// 
+			// checkBoxColAuthor
+			// 
+			this->checkBoxColAuthor->AutoSize = true;
+			this->checkBoxColAuthor->Checked = true;
+			this->checkBoxColAuthor->CheckState = System::Windows::Forms::CheckState::Checked;
+			this->checkBoxColAuthor->Location = System::Drawing::Point(15, 59);
+			this->checkBoxColAuthor->Name = L"checkBoxColAuthor";
+			this->checkBoxColAuthor->Size = System::Drawing::Size(77, 25);
+			this->checkBoxColAuthor->TabIndex = 1;
+			this->checkBoxColAuthor->Text = L"Author";
+			this->checkBoxColAuthor->UseVisualStyleBackColor = true;
+			this->checkBoxColAuthor->CheckedChanged += gcnew System::EventHandler(this, &MainForm::checkBoxColAuthor_CheckedChanged);
+			// 
+			// checkBoxColName
+			// 
+			this->checkBoxColName->AutoSize = true;
+			this->checkBoxColName->Checked = true;
+			this->checkBoxColName->CheckState = System::Windows::Forms::CheckState::Checked;
+			this->checkBoxColName->Location = System::Drawing::Point(15, 28);
+			this->checkBoxColName->Name = L"checkBoxColName";
+			this->checkBoxColName->Size = System::Drawing::Size(71, 25);
+			this->checkBoxColName->TabIndex = 0;
+			this->checkBoxColName->Text = L"Name";
+			this->checkBoxColName->UseVisualStyleBackColor = true;
+			this->checkBoxColName->CheckedChanged += gcnew System::EventHandler(this, &MainForm::checkBoxColName_CheckedChanged);
+			// 
+			// aboutPogramToolStripMenuItem
+			// 
+			this->aboutPogramToolStripMenuItem->Name = L"aboutPogramToolStripMenuItem";
+			this->aboutPogramToolStripMenuItem->Size = System::Drawing::Size(117, 25);
+			this->aboutPogramToolStripMenuItem->Text = L"About Library";
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(9, 21);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->AutoSize = true;
 			this->BackColor = System::Drawing::SystemColors::Control;
-			this->ClientSize = System::Drawing::Size(1283, 613);
+			this->ClientSize = System::Drawing::Size(1202, 613);
+			this->Controls->Add(this->groupBoxColumns);
+			this->Controls->Add(this->buttonSearch);
 			this->Controls->Add(this->groupBoxSort);
-			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->textBoxSearch);
 			this->Controls->Add(this->buttonNew);
 			this->Controls->Add(this->groupBoxBook);
 			this->Controls->Add(this->dataGridViewLibrary);
@@ -481,13 +597,16 @@ namespace CppCLRWinFormsProject {
 			this->MainMenuStrip = this->menuMain;
 			this->Margin = System::Windows::Forms::Padding(3, 5, 3, 5);
 			this->Name = L"MainForm";
-			this->Text = L"Бібліотека";
+			this->Text = L"Library";
+			this->WindowState = System::Windows::Forms::FormWindowState::Minimized;
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridViewLibrary))->EndInit();
 			this->menuMain->ResumeLayout(false);
 			this->menuMain->PerformLayout();
 			this->groupBoxBook->ResumeLayout(false);
 			this->groupBoxBook->PerformLayout();
 			this->groupBoxSort->ResumeLayout(false);
+			this->groupBoxColumns->ResumeLayout(false);
+			this->groupBoxColumns->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -502,7 +621,7 @@ namespace CppCLRWinFormsProject {
 		if (System::Windows::Forms::DialogResult::OK != openFileDialogLibrary->ShowDialog()) return;
 
 		String^ fileName = openFileDialogLibrary->FileName;
-		Text = L"Бібліотека" + L" (файл:" + fileName + ")";
+		Text = L"Library" + L" (file:" + fileName + ")";
 		ev.LoadFile(msclr::interop::marshal_as<std::string>(fileName));
 		UpdateDataGridView(0);
 	}
@@ -529,21 +648,17 @@ namespace CppCLRWinFormsProject {
 	}
 	private: System::Void mmiCreateNew_Click(System::Object^ sender, System::EventArgs^ e)
 	{
-
+		EventsHandler().Clear();
+		UpdateDataGridView(0);
 	}
-
+	private: System::Void mmiOrderBy_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (groupBoxSort->Visible)
+			dataGridViewLibrary->Focus();
+		groupBoxSort->Visible = !groupBoxSort->Visible;
+	}
 #pragma endregion
 
-	private: System::Void dataGridViewLibrary_SelectionChanged(System::Object^ sender, System::EventArgs^ e)
-	{
-		int index = 0;
-		if (dataGridViewLibrary->SelectedCells->Count < 1) return;
-		index = dataGridViewLibrary->SelectedCells[0]->RowIndex;
-		dataGridViewLibrary->Rows[index]->Selected = true;
-		EventsHandler().LoadBook(index, textBoxName, textBoxAuthor, textBoxPubl, textBoxPages, textBoxYear);
-		groupBoxBook->Enabled = true;
-		buttonSaveBook->Enabled = false;
-	}
+#pragma region BookBox
 	private: System::Void textBoxName_TextChanged(System::Object^ sender, System::EventArgs^ e)
 	{
 		buttonSaveBook->Enabled = true;
@@ -577,39 +692,101 @@ namespace CppCLRWinFormsProject {
 		ev.DeleteBook(dataGridViewLibrary->SelectedCells[0]->RowIndex);
 		UpdateDataGridView(0);
 	}
-	private: System::Void buttonNew_Click(System::Object^ sender, System::EventArgs^ e)
-	{
-		EventsHandler ev;
-		ev.CreateBook();
-		UpdateDataGridView(dataGridViewLibrary->RowCount);
-	}
-	private: System::Void TextBoxClear()
-	{
-		textBoxName->Text = "";
-		textBoxAuthor->Text = "";
-		textBoxPubl->Text = "";
-		textBoxPages->Text = "";
-		textBoxYear->Text = "";
-	}
-	private: System::Void UpdateDataGridView(int selectionIndex)
-	{
-		dataGridViewLibrary->Rows->Clear();
-		List<ComboBox^>^ sort = gcnew List<ComboBox^>();
-		sort->Add(comboBoxSort1);
-		sort->Add(comboBoxSort2);
-		sort->Add(comboBoxSort3);
-		sort->Add(comboBoxSort4);
-		sort->Add(comboBoxSort5);
-		EventsHandler().LoadDataGridView(dataGridViewLibrary, sort);
-		dataGridViewLibrary->ClearSelection();
-		dataGridViewLibrary->Rows[selectionIndex]->Selected = true;
-		buttonSaveBook->Enabled = false;
-		buttonNew->Enabled = true;
-	}
-	private: System::Void mmiSort_Click(System::Object^ sender, System::EventArgs^ e) {
-		groupBoxSort->Visible = !groupBoxSort->Visible;
-	}
+#pragma endregion
 
+#pragma region comboBoxEvents
+	private: System::Void comboBoxSort1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+		comboBoxSort2->Enabled = true;
+		comboBoxSort3->Enabled = false;
+		comboBoxSort4->Enabled = false;
+		comboBoxSort5->Enabled = false;
+		comboBoxSort2->Items->Clear();
+		comboBoxSort3->Items->Clear();
+		comboBoxSort4->Items->Clear();
+		comboBoxSort5->Items->Clear();
+		comboBoxSort2->SelectedItem = nullptr;
+		comboBoxSort3->SelectedItem = nullptr;
+		comboBoxSort4->SelectedItem = nullptr;
+		comboBoxSort5->SelectedItem = nullptr;
+		comboBoxSort2->ResetText();
+		comboBoxSort3->ResetText();
+		comboBoxSort4->ResetText();
+		comboBoxSort5->ResetText();
+		UpdateComboBoxSave(1);
+	}
+	private: System::Void comboBoxSort2_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+		comboBoxSort3->Enabled = true;
+		comboBoxSort4->Enabled = false;
+		comboBoxSort5->Enabled = false;
+		comboBoxSort3->Items->Clear();
+		comboBoxSort4->Items->Clear();
+		comboBoxSort5->Items->Clear();
+		comboBoxSort3->SelectedItem = nullptr;
+		comboBoxSort4->SelectedItem = nullptr;
+		comboBoxSort5->SelectedItem = nullptr;
+		comboBoxSort3->ResetText();
+		comboBoxSort4->ResetText();
+		comboBoxSort5->ResetText();
+		UpdateComboBoxSave(2);
+	}
+	private: System::Void comboBoxSort3_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+		comboBoxSort4->Enabled = true;
+		comboBoxSort5->Enabled = false;
+		comboBoxSort4->Items->Clear();
+		comboBoxSort5->Items->Clear();
+		comboBoxSort4->SelectedItem = nullptr;
+		comboBoxSort5->SelectedItem = nullptr;
+		comboBoxSort4->ResetText();
+		comboBoxSort5->ResetText();
+		UpdateComboBoxSave(3);
+	}
+	private: System::Void comboBoxSort4_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+		comboBoxSort5->Enabled = true;
+		comboBoxSort5->Items->Clear();
+		comboBoxSort5->SelectedItem = "";
+		comboBoxSort5->ResetText();
+		UpdateComboBoxSave(4);
+	}
+	private: System::Void comboBoxSort5_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+	}
+	private: System::Void buttonSortClear_Click(System::Object^ sender, System::EventArgs^ e)
+	{
+		comboBoxSort1->SelectedItem = nullptr;
+		comboBoxSort2->SelectedItem = nullptr;
+		comboBoxSort3->SelectedItem = nullptr;
+		comboBoxSort4->SelectedItem = nullptr;
+		comboBoxSort5->SelectedItem = nullptr;
+		comboBoxSort1->ResetText();
+		comboBoxSort2->ResetText();
+		comboBoxSort3->ResetText();
+		comboBoxSort4->ResetText();
+		comboBoxSort5->ResetText();
+		comboBoxSort2->Enabled = false;
+		comboBoxSort3->Enabled = false;
+		comboBoxSort4->Enabled = false;
+		comboBoxSort5->Enabled = false;
+		comboBoxSort2->Items->Clear();
+		comboBoxSort3->Items->Clear();
+		comboBoxSort4->Items->Clear();
+		comboBoxSort5->Items->Clear();
+		groupBoxSort->Visible = false;
+		dataGridViewLibrary->Focus();
+		if (dataGridViewLibrary->RowCount == 0)
+			return;
+		UpdateDataGridView(0);
+	}
+	private: System::Void buttonApplySort_Click(System::Object^ sender, System::EventArgs^ e) {
+		groupBoxSort->Visible = false;
+		dataGridViewLibrary->Focus();
+		if (dataGridViewLibrary->RowCount == 0)
+			return;
+		UpdateDataGridView(0);
+	}
 	private: System::Void UpdateComboBoxSave(int c)
 	{
 		List<String^>^ l = gcnew List<String^>();
@@ -664,108 +841,96 @@ namespace CppCLRWinFormsProject {
 		default:
 			break;
 		}
-
-
-	}
-#pragma region comboBoxEvents
-	private: System::Void comboBoxSort1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
-	{
-		comboBoxSort2->Enabled = true;
-		comboBoxSort3->Enabled = false;
-		comboBoxSort4->Enabled = false;
-		comboBoxSort5->Enabled = false;
-		comboBoxSort2->Items->Clear();
-		comboBoxSort3->Items->Clear();
-		comboBoxSort4->Items->Clear();
-		comboBoxSort5->Items->Clear();
-		comboBoxSort2->SelectedItem = nullptr;
-		comboBoxSort3->SelectedItem = nullptr;
-		comboBoxSort4->SelectedItem = nullptr;
-		comboBoxSort5->SelectedItem = nullptr;
-		comboBoxSort2->ResetText();
-		comboBoxSort3->ResetText();
-		comboBoxSort4->ResetText();
-		comboBoxSort5->ResetText();
-		UpdateComboBoxSave(1);
-		if (dataGridViewLibrary->RowCount == 0)
-			return;
-		UpdateDataGridView(0);
-	}
-	private: System::Void comboBoxSort2_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
-	{
-		comboBoxSort3->Enabled = true;
-		comboBoxSort4->Enabled = false;
-		comboBoxSort5->Enabled = false;
-		comboBoxSort3->Items->Clear();
-		comboBoxSort4->Items->Clear();
-		comboBoxSort5->Items->Clear();
-		comboBoxSort3->SelectedItem = nullptr;
-		comboBoxSort4->SelectedItem = nullptr;
-		comboBoxSort5->SelectedItem = nullptr;
-		comboBoxSort3->ResetText();
-		comboBoxSort4->ResetText();
-		comboBoxSort5->ResetText();
-		UpdateComboBoxSave(2);
-		if (dataGridViewLibrary->RowCount == 0)
-			return;
-		UpdateDataGridView(0);
-	}
-	private: System::Void comboBoxSort3_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
-	{
-		comboBoxSort4->Enabled = true;
-		comboBoxSort5->Enabled = false;
-		comboBoxSort4->Items->Clear();
-		comboBoxSort5->Items->Clear();
-		comboBoxSort4->SelectedItem = nullptr;
-		comboBoxSort5->SelectedItem = nullptr;
-		comboBoxSort4->ResetText();
-		comboBoxSort5->ResetText();
-		UpdateComboBoxSave(3);
-		if (dataGridViewLibrary->RowCount == 0)
-			return;
-		UpdateDataGridView(0);
-	}
-	private: System::Void comboBoxSort4_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
-	{
-		comboBoxSort5->Enabled = true;
-		comboBoxSort5->Items->Clear();
-		comboBoxSort5->SelectedItem = "";
-		comboBoxSort5->ResetText();
-		UpdateComboBoxSave(4);
-		if (dataGridViewLibrary->RowCount == 0)
-			return;
-		UpdateDataGridView(0);
-	}
-	private: System::Void comboBoxSort5_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
-	{
-		if (dataGridViewLibrary->RowCount == 0)
-			return;
-		UpdateDataGridView(0);
-	}
-	private: System::Void buttonSortClear_Click(System::Object^ sender, System::EventArgs^ e)
-	{
-		comboBoxSort1->SelectedItem = nullptr;
-		comboBoxSort2->SelectedItem = nullptr;
-		comboBoxSort3->SelectedItem = nullptr;
-		comboBoxSort4->SelectedItem = nullptr;
-		comboBoxSort5->SelectedItem = nullptr;
-		comboBoxSort1->ResetText();
-		comboBoxSort2->ResetText();
-		comboBoxSort3->ResetText();
-		comboBoxSort4->ResetText();
-		comboBoxSort5->ResetText();
-		comboBoxSort2->Enabled = false;
-		comboBoxSort3->Enabled = false;
-		comboBoxSort4->Enabled = false;
-		comboBoxSort5->Enabled = false;
-		comboBoxSort2->Items->Clear();
-		comboBoxSort3->Items->Clear();
-		comboBoxSort4->Items->Clear();
-		comboBoxSort5->Items->Clear();
-		if (dataGridViewLibrary->RowCount == 0)
-			return;
-		UpdateDataGridView(0);
 	}
 #pragma endregion
+
+	private: System::Void dataGridViewLibrary_SelectionChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+		int index = 0;
+		if (dataGridViewLibrary->SelectedCells->Count < 1) return;
+		index = dataGridViewLibrary->SelectedCells[0]->RowIndex;
+		dataGridViewLibrary->Rows[index]->Selected = true;
+		EventsHandler().LoadBook(index, textBoxName, textBoxAuthor, textBoxPubl, textBoxPages, textBoxYear);
+		groupBoxBook->Enabled = true;
+		buttonSaveBook->Enabled = false;
+	}
+	private: System::Void buttonNew_Click(System::Object^ sender, System::EventArgs^ e)
+	{
+		EventsHandler ev;
+		ev.CreateBook();
+		UpdateDataGridView(dataGridViewLibrary->RowCount);
+	}
+	private: System::Void TextBoxClear()
+	{
+		textBoxName->Text = "";
+		textBoxAuthor->Text = "";
+		textBoxPubl->Text = "";
+		textBoxPages->Text = "";
+		textBoxYear->Text = "";
+	}
+	private: System::Void UpdateDataGridView(int selectionIndex)
+	{
+		dataGridViewLibrary->Rows->Clear();
+		List<ComboBox^>^ sort = gcnew List<ComboBox^>();
+		sort->Add(comboBoxSort1);
+		sort->Add(comboBoxSort2);
+		sort->Add(comboBoxSort3);
+		sort->Add(comboBoxSort4);
+		sort->Add(comboBoxSort5);
+		EventsHandler().LoadDataGridView(dataGridViewLibrary, sort, textBoxSearch->Text, LoadColumns());
+		dataGridViewLibrary->ClearSelection();
+		if (dataGridViewLibrary->RowCount > 1)
+			dataGridViewLibrary->Rows[selectionIndex]->Selected = true;
+		buttonSaveBook->Enabled = false;
+		buttonNew->Enabled = true;
+	}
+
+	private: System::Void buttonSearch_Click(System::Object^ sender, System::EventArgs^ e) {
+		UpdateDataGridView(0);
+		dataGridViewLibrary->Focus();
+	}
+	private: System::Void checkBoxColName_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		UpdateDataGridView(0);
+		dataGridViewLibrary->Focus();
+	}
+	private: List<bool>^ LoadColumns()
+	{
+		int size = 765;
+		List<bool>^ result = gcnew List<bool>();
+		dataGridViewLibrary->Columns->Clear();
+
+		result->Add(checkBoxColName->Checked);
+		result->Add(checkBoxColAuthor->Checked);
+		result->Add(checkBoxColPages->Checked);
+		result->Add(checkBoxColYear->Checked);
+
+		if (checkBoxColName->Checked)
+			dataGridViewLibrary->Columns->Add("Name", "Name");
+		if (checkBoxColAuthor->Checked)
+			dataGridViewLibrary->Columns->Add("Author", "Author");
+		if (checkBoxColPages->Checked)
+			dataGridViewLibrary->Columns->Add("Pages", "Pages");
+		if (checkBoxColYear->Checked)
+			dataGridViewLibrary->Columns->Add("Year", "Year");
+
+		for (int i = 0; i < dataGridViewLibrary->ColumnCount; i++)
+		{
+			dataGridViewLibrary->Columns[i]->Width = size / dataGridViewLibrary->ColumnCount;
+			dataGridViewLibrary->Columns[i]->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
+		}
+		return result;
+	}
+	private: System::Void checkBoxColAuthor_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		UpdateDataGridView(0);
+		dataGridViewLibrary->Focus();
+	}
+	private: System::Void checkBoxColPages_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		UpdateDataGridView(0);
+		dataGridViewLibrary->Focus();
+	}
+	private: System::Void checkBoxColYear_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		UpdateDataGridView(0);
+		dataGridViewLibrary->Focus();
+	}
 	};
 }
