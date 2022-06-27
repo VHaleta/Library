@@ -31,8 +31,8 @@ public:
 	void SaveFile();
 	void SaveFile(string fileName);
 	void Clear();
-	void LoadBook(int index, TextBox^ textBoxName, TextBox^ textBoxAuthor, TextBox^ textBoxPubl, TextBox^ textBoxPages, TextBox^ textBoxYear);
-	void SaveBook(int index, TextBox^ textBoxName, TextBox^ textBoxAuthor, TextBox^ textBoxPubl, TextBox^ textBoxPages, TextBox^ textBoxYear);
+	void LoadBook(int index, TextBox^ textBoxName, TextBox^ textBoxAuthor, TextBox^ textBoxPubl, TextBox^ textBoxPages, TextBox^ textBoxYear, RichTextBox^ textBoxDescription);
+	void SaveBook(int index, TextBox^ textBoxName, TextBox^ textBoxAuthor, TextBox^ textBoxPubl, TextBox^ textBoxPages, TextBox^ textBoxYear, RichTextBox^ textBoxDescription);
 	void DeleteBook(int index);
 	void CreateBook();
 private:

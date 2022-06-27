@@ -60,17 +60,18 @@ void EventsHandler::SaveFile(string fileName)
 	FileProvider::SaveToFile(allBooks, fileName);
 }
 
-void EventsHandler::LoadBook(int index, TextBox^ textBoxName, TextBox^ textBoxAuthor, TextBox^ textBoxPubl, TextBox^ textBoxPages, TextBox^ textBoxYear)
+void EventsHandler::LoadBook(int index, TextBox^ textBoxName, TextBox^ textBoxAuthor, TextBox^ textBoxPubl, TextBox^ textBoxPages, TextBox^ textBoxYear, RichTextBox^ textBoxDescription)
 {
 	Book b = books[index];
 	textBoxName->Text = StrConvert(b.name);
 	textBoxAuthor->Text = StrConvert(b.author);
 	textBoxPubl->Text = StrConvert(b.publishingHouse);
+	textBoxDescription->Text = StrConvert(b.description);
 	textBoxPages->Text = StrConvert(to_string(b.pages));
 	textBoxYear->Text = StrConvert(to_string(b.year));
 }
 
-void EventsHandler::SaveBook(int index, TextBox^ textBoxName, TextBox^ textBoxAuthor, TextBox^ textBoxPubl, TextBox^ textBoxPages, TextBox^ textBoxYear)
+void EventsHandler::SaveBook(int index, TextBox^ textBoxName, TextBox^ textBoxAuthor, TextBox^ textBoxPubl, TextBox^ textBoxPages, TextBox^ textBoxYear, RichTextBox^ textBoxDescription)
 {
 	Book* b = &books[index];
 	auto itr = std::find(allBooks.begin(), allBooks.end(), *b);
@@ -82,6 +83,7 @@ void EventsHandler::SaveBook(int index, TextBox^ textBoxName, TextBox^ textBoxAu
 	b->publishingHouse = StrConvert(textBoxPubl->Text);
 	b->pages = atoi(StrConvert(textBoxPages->Text).c_str());
 	b->year = atoi(StrConvert(textBoxYear->Text).c_str());
+	b->description = StrConvert(textBoxDescription->Text);
 
 	allBooks[bookIndex] = *b;
 }

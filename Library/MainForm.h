@@ -28,6 +28,7 @@ namespace CppCLRWinFormsProject {
 			dataGridViewLibrary->Columns[1]->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
 			groupBoxBook->Enabled = false;
 			groupBoxSort->Visible = false;
+			groupBoxAbout->Visible = false;
 			comboBoxSort1->Items->Add(L"Name");
 			comboBoxSort1->Items->Add(L"Author");
 			comboBoxSort1->Items->Add(L"Publishing House");
@@ -68,7 +69,8 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::TextBox^ textBoxYear;
 	private: System::Windows::Forms::Label^ label5;
 	private: System::Windows::Forms::TextBox^ textBoxPages;
-	private: System::Windows::Forms::RichTextBox^ richTextBox1;
+	private: System::Windows::Forms::RichTextBox^ richTextBoxDescription;
+
 	private: System::Windows::Forms::ToolStripMenuItem^ mmiCreateNew;
 	private: System::Windows::Forms::Button^ buttonDeleteBook;
 
@@ -96,7 +98,16 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::CheckBox^ checkBoxColPages;
 	private: System::Windows::Forms::CheckBox^ checkBoxColAuthor;
 	private: System::Windows::Forms::CheckBox^ checkBoxColName;
-	private: System::Windows::Forms::ToolStripMenuItem^ aboutPogramToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ aboutLibraryToolStripMenuItem;
+	private: System::Windows::Forms::GroupBox^ groupBoxAbout;
+	private: System::Windows::Forms::LinkLabel^ linkLabel1;
+	private: System::Windows::Forms::Label^ label8;
+	private: System::Windows::Forms::Label^ label7;
+	private: System::Windows::Forms::Label^ label6;
+
+
+
+
 
 
 
@@ -126,6 +137,7 @@ namespace CppCLRWinFormsProject {
 			this->mmiCreateNew = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mmiClose = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mmiOrderBy = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->aboutLibraryToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openFileDialogLibrary = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->saveFileDialogLibrary = (gcnew System::Windows::Forms::SaveFileDialog());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -137,7 +149,7 @@ namespace CppCLRWinFormsProject {
 			this->groupBoxBook = (gcnew System::Windows::Forms::GroupBox());
 			this->buttonDeleteBook = (gcnew System::Windows::Forms::Button());
 			this->buttonSaveBook = (gcnew System::Windows::Forms::Button());
-			this->richTextBox1 = (gcnew System::Windows::Forms::RichTextBox());
+			this->richTextBoxDescription = (gcnew System::Windows::Forms::RichTextBox());
 			this->textBoxYear = (gcnew System::Windows::Forms::TextBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->textBoxPages = (gcnew System::Windows::Forms::TextBox());
@@ -158,12 +170,17 @@ namespace CppCLRWinFormsProject {
 			this->checkBoxColPages = (gcnew System::Windows::Forms::CheckBox());
 			this->checkBoxColAuthor = (gcnew System::Windows::Forms::CheckBox());
 			this->checkBoxColName = (gcnew System::Windows::Forms::CheckBox());
-			this->aboutPogramToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->groupBoxAbout = (gcnew System::Windows::Forms::GroupBox());
+			this->linkLabel1 = (gcnew System::Windows::Forms::LinkLabel());
+			this->label8 = (gcnew System::Windows::Forms::Label());
+			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->label6 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridViewLibrary))->BeginInit();
 			this->menuMain->SuspendLayout();
 			this->groupBoxBook->SuspendLayout();
 			this->groupBoxSort->SuspendLayout();
 			this->groupBoxColumns->SuspendLayout();
+			this->groupBoxAbout->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// dataGridViewLibrary
@@ -201,7 +218,7 @@ namespace CppCLRWinFormsProject {
 			this->menuMain->ImageScalingSize = System::Drawing::Size(20, 20);
 			this->menuMain->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
 				this->mmiFile, this->mmiOrderBy,
-					this->aboutPogramToolStripMenuItem
+					this->aboutLibraryToolStripMenuItem
 			});
 			this->menuMain->Location = System::Drawing::Point(0, 0);
 			this->menuMain->Name = L"menuMain";
@@ -260,6 +277,13 @@ namespace CppCLRWinFormsProject {
 			this->mmiOrderBy->Size = System::Drawing::Size(80, 25);
 			this->mmiOrderBy->Text = L"OrderBy";
 			this->mmiOrderBy->Click += gcnew System::EventHandler(this, &MainForm::mmiOrderBy_Click);
+			// 
+			// aboutLibraryToolStripMenuItem
+			// 
+			this->aboutLibraryToolStripMenuItem->Name = L"aboutLibraryToolStripMenuItem";
+			this->aboutLibraryToolStripMenuItem->Size = System::Drawing::Size(117, 25);
+			this->aboutLibraryToolStripMenuItem->Text = L"About Library";
+			this->aboutLibraryToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::aboutLibraryToolStripMenuItem_Click);
 			// 
 			// openFileDialogLibrary
 			// 
@@ -320,7 +344,7 @@ namespace CppCLRWinFormsProject {
 			// 
 			this->groupBoxBook->Controls->Add(this->buttonDeleteBook);
 			this->groupBoxBook->Controls->Add(this->buttonSaveBook);
-			this->groupBoxBook->Controls->Add(this->richTextBox1);
+			this->groupBoxBook->Controls->Add(this->richTextBoxDescription);
 			this->groupBoxBook->Controls->Add(this->textBoxYear);
 			this->groupBoxBook->Controls->Add(this->label5);
 			this->groupBoxBook->Controls->Add(this->textBoxPages);
@@ -358,14 +382,15 @@ namespace CppCLRWinFormsProject {
 			this->buttonSaveBook->UseVisualStyleBackColor = true;
 			this->buttonSaveBook->Click += gcnew System::EventHandler(this, &MainForm::buttonSaveBook_Click);
 			// 
-			// richTextBox1
+			// richTextBoxDescription
 			// 
-			this->richTextBox1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->richTextBox1->Location = System::Drawing::Point(6, 200);
-			this->richTextBox1->Name = L"richTextBox1";
-			this->richTextBox1->Size = System::Drawing::Size(333, 146);
-			this->richTextBox1->TabIndex = 12;
-			this->richTextBox1->Text = L"";
+			this->richTextBoxDescription->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->richTextBoxDescription->Location = System::Drawing::Point(6, 200);
+			this->richTextBoxDescription->Name = L"richTextBoxDescription";
+			this->richTextBoxDescription->Size = System::Drawing::Size(333, 146);
+			this->richTextBoxDescription->TabIndex = 12;
+			this->richTextBoxDescription->Text = L"";
+			this->richTextBoxDescription->TextChanged += gcnew System::EventHandler(this, &MainForm::richTextBoxDescription_TextChanged);
 			// 
 			// textBoxYear
 			// 
@@ -570,11 +595,56 @@ namespace CppCLRWinFormsProject {
 			this->checkBoxColName->UseVisualStyleBackColor = true;
 			this->checkBoxColName->CheckedChanged += gcnew System::EventHandler(this, &MainForm::checkBoxColName_CheckedChanged);
 			// 
-			// aboutPogramToolStripMenuItem
+			// groupBoxAbout
 			// 
-			this->aboutPogramToolStripMenuItem->Name = L"aboutPogramToolStripMenuItem";
-			this->aboutPogramToolStripMenuItem->Size = System::Drawing::Size(117, 25);
-			this->aboutPogramToolStripMenuItem->Text = L"About Library";
+			this->groupBoxAbout->Controls->Add(this->linkLabel1);
+			this->groupBoxAbout->Controls->Add(this->label8);
+			this->groupBoxAbout->Controls->Add(this->label7);
+			this->groupBoxAbout->Controls->Add(this->label6);
+			this->groupBoxAbout->Location = System::Drawing::Point(210, 32);
+			this->groupBoxAbout->Name = L"groupBoxAbout";
+			this->groupBoxAbout->Size = System::Drawing::Size(468, 163);
+			this->groupBoxAbout->TabIndex = 15;
+			this->groupBoxAbout->TabStop = false;
+			this->groupBoxAbout->Text = L"About Library";
+			// 
+			// linkLabel1
+			// 
+			this->linkLabel1->AutoSize = true;
+			this->linkLabel1->Location = System::Drawing::Point(92, 110);
+			this->linkLabel1->Name = L"linkLabel1";
+			this->linkLabel1->Size = System::Drawing::Size(253, 21);
+			this->linkLabel1->TabIndex = 3;
+			this->linkLabel1->TabStop = true;
+			this->linkLabel1->Text = L"https://github.com/VHaleta/Library";
+			this->linkLabel1->LinkClicked += gcnew System::Windows::Forms::LinkLabelLinkClickedEventHandler(this, &MainForm::linkLabel1_LinkClicked);
+			// 
+			// label8
+			// 
+			this->label8->AutoSize = true;
+			this->label8->Location = System::Drawing::Point(34, 110);
+			this->label8->Name = L"label8";
+			this->label8->Size = System::Drawing::Size(59, 21);
+			this->label8->TabIndex = 2;
+			this->label8->Text = L"GitHub";
+			// 
+			// label7
+			// 
+			this->label7->AutoSize = true;
+			this->label7->Location = System::Drawing::Point(34, 74);
+			this->label7->Name = L"label7";
+			this->label7->Size = System::Drawing::Size(145, 21);
+			this->label7->TabIndex = 1;
+			this->label7->Text = L"Creator Vlad Haleta";
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Location = System::Drawing::Point(34, 36);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(386, 21);
+			this->label6->TabIndex = 0;
+			this->label6->Text = L"This program was created for managing your book list";
 			// 
 			// MainForm
 			// 
@@ -583,6 +653,7 @@ namespace CppCLRWinFormsProject {
 			this->AutoSize = true;
 			this->BackColor = System::Drawing::SystemColors::Control;
 			this->ClientSize = System::Drawing::Size(1202, 613);
+			this->Controls->Add(this->groupBoxAbout);
 			this->Controls->Add(this->groupBoxColumns);
 			this->Controls->Add(this->buttonSearch);
 			this->Controls->Add(this->groupBoxSort);
@@ -607,6 +678,8 @@ namespace CppCLRWinFormsProject {
 			this->groupBoxSort->ResumeLayout(false);
 			this->groupBoxColumns->ResumeLayout(false);
 			this->groupBoxColumns->PerformLayout();
+			this->groupBoxAbout->ResumeLayout(false);
+			this->groupBoxAbout->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -656,6 +729,9 @@ namespace CppCLRWinFormsProject {
 			dataGridViewLibrary->Focus();
 		groupBoxSort->Visible = !groupBoxSort->Visible;
 	}
+	private: System::Void aboutLibraryToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+		groupBoxAbout->Visible = !groupBoxAbout->Visible;
+	}
 #pragma endregion
 
 #pragma region BookBox
@@ -679,11 +755,14 @@ namespace CppCLRWinFormsProject {
 	{
 		buttonSaveBook->Enabled = true;
 	}
+	private: System::Void richTextBoxDescription_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		buttonSaveBook->Enabled = true;
+	}
 	private: System::Void buttonSaveBook_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		EventsHandler ev;
 		int index = dataGridViewLibrary->SelectedCells[0]->RowIndex;
-		ev.SaveBook(index, textBoxName, textBoxAuthor, textBoxPubl, textBoxPages, textBoxYear);
+		ev.SaveBook(index, textBoxName, textBoxAuthor, textBoxPubl, textBoxPages, textBoxYear, richTextBoxDescription);
 		UpdateDataGridView(index);
 	}
 	private: System::Void buttonDeleteBook_Click(System::Object^ sender, System::EventArgs^ e)
@@ -850,7 +929,7 @@ namespace CppCLRWinFormsProject {
 		if (dataGridViewLibrary->SelectedCells->Count < 1) return;
 		index = dataGridViewLibrary->SelectedCells[0]->RowIndex;
 		dataGridViewLibrary->Rows[index]->Selected = true;
-		EventsHandler().LoadBook(index, textBoxName, textBoxAuthor, textBoxPubl, textBoxPages, textBoxYear);
+		EventsHandler().LoadBook(index, textBoxName, textBoxAuthor, textBoxPubl, textBoxPages, textBoxYear, richTextBoxDescription);
 		groupBoxBook->Enabled = true;
 		buttonSaveBook->Enabled = false;
 	}
@@ -931,6 +1010,9 @@ namespace CppCLRWinFormsProject {
 	private: System::Void checkBoxColYear_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 		UpdateDataGridView(0);
 		dataGridViewLibrary->Focus();
+	}
+	private: System::Void linkLabel1_LinkClicked(System::Object^ sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs^ e) {
+		system("start https://github.com/VHaleta/Library");
 	}
 	};
 }
