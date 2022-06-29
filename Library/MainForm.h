@@ -99,27 +99,15 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::CheckBox^ checkBoxColPages;
 	private: System::Windows::Forms::CheckBox^ checkBoxColAuthor;
 	private: System::Windows::Forms::CheckBox^ checkBoxColName;
-	private: System::Windows::Forms::ToolStripMenuItem^ aboutLibraryToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ mmiAboutLibrary;
+
 	private: System::Windows::Forms::GroupBox^ groupBoxAbout;
 	private: System::Windows::Forms::LinkLabel^ linkLabel1;
 	private: System::Windows::Forms::Label^ label8;
 	private: System::Windows::Forms::Label^ label7;
 	private: System::Windows::Forms::Label^ label6;
-
-
-
-
-
-
-
-
-
-
 	private: System::ComponentModel::IContainer^ components;
-
-
 	private:
-
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -138,7 +126,7 @@ namespace CppCLRWinFormsProject {
 			this->mmiCreateNew = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mmiClose = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mmiOrderBy = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->aboutLibraryToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->mmiAboutLibrary = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openFileDialogLibrary = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->saveFileDialogLibrary = (gcnew System::Windows::Forms::SaveFileDialog());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -219,7 +207,7 @@ namespace CppCLRWinFormsProject {
 			this->menuMain->ImageScalingSize = System::Drawing::Size(20, 20);
 			this->menuMain->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
 				this->mmiFile, this->mmiOrderBy,
-					this->aboutLibraryToolStripMenuItem
+					this->mmiAboutLibrary
 			});
 			this->menuMain->Location = System::Drawing::Point(0, 0);
 			this->menuMain->Name = L"menuMain";
@@ -279,12 +267,12 @@ namespace CppCLRWinFormsProject {
 			this->mmiOrderBy->Text = L"OrderBy";
 			this->mmiOrderBy->Click += gcnew System::EventHandler(this, &MainForm::mmiOrderBy_Click);
 			// 
-			// aboutLibraryToolStripMenuItem
+			// mmiAboutLibrary
 			// 
-			this->aboutLibraryToolStripMenuItem->Name = L"aboutLibraryToolStripMenuItem";
-			this->aboutLibraryToolStripMenuItem->Size = System::Drawing::Size(117, 25);
-			this->aboutLibraryToolStripMenuItem->Text = L"About Library";
-			this->aboutLibraryToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::aboutLibraryToolStripMenuItem_Click);
+			this->mmiAboutLibrary->Name = L"mmiAboutLibrary";
+			this->mmiAboutLibrary->Size = System::Drawing::Size(117, 25);
+			this->mmiAboutLibrary->Text = L"About Library";
+			this->mmiAboutLibrary->Click += gcnew System::EventHandler(this, &MainForm::mmiAboutLibrary_Click);
 			// 
 			// openFileDialogLibrary
 			// 
@@ -730,7 +718,7 @@ namespace CppCLRWinFormsProject {
 			dataGridViewLibrary->Focus();
 		groupBoxSort->Visible = !groupBoxSort->Visible;
 	}
-	private: System::Void aboutLibraryToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void mmiAboutLibrary_Click(System::Object^ sender, System::EventArgs^ e) {
 		groupBoxAbout->Visible = !groupBoxAbout->Visible;
 	}
 #pragma endregion
@@ -832,6 +820,7 @@ namespace CppCLRWinFormsProject {
 	}
 	private: System::Void comboBoxSort5_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
 	{
+		UpdateComboBoxSave(5);
 	}
 	private: System::Void buttonSortClear_Click(System::Object^ sender, System::EventArgs^ e)
 	{
@@ -949,6 +938,8 @@ namespace CppCLRWinFormsProject {
 	}
 	private: System::Void UpdateDataGridView(int selectionIndex)
 	{
+		EventsHandler ev;
+		ev.currentBook = selectionIndex;
 		dataGridViewLibrary->Rows->Clear();
 		List<ComboBox^>^ sort = gcnew List<ComboBox^>();
 		sort->Add(comboBoxSort1);
@@ -956,7 +947,7 @@ namespace CppCLRWinFormsProject {
 		sort->Add(comboBoxSort3);
 		sort->Add(comboBoxSort4);
 		sort->Add(comboBoxSort5);
-		EventsHandler().LoadDataGridView(dataGridViewLibrary, sort, textBoxSearch->Text, LoadColumns());
+		ev.LoadDataGridView(dataGridViewLibrary, sort, textBoxSearch->Text, LoadColumns());
 		dataGridViewLibrary->ClearSelection();
 		if (dataGridViewLibrary->RowCount > 1)
 			dataGridViewLibrary->Rows[selectionIndex]->Selected = true;

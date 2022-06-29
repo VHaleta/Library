@@ -20,32 +20,33 @@ void EventsHandler::LoadDataGridView(DataGridView^ dataGridView, List<ComboBox^>
 			sortKeys.push_back(StrConvert(comboBoxes[i]->SelectedItem->ToString()));
 		}
 	}
-	if (books.size() > 1)
+	if (books.size() > 1 && sortKeys.size() > 0)
 		QuickSort(0, books.size() - 1);
 	Search(StrConvert(search));
 
-	for (int i = 0; i < books.size(); i++)
-	{
-		int s = 0;
-		dataGridView->Rows->Add();
-		if (columns[0])
+	if (dataGridView->ColumnCount > 0)
+		for (int i = 0; i < books.size(); i++)
 		{
-			dataGridView->Rows[i]->Cells[s]->Value = StrConvert(books[i].name);
-			s++;
+			int s = 0;
+			dataGridView->Rows->Add();
+			if (columns[0])
+			{
+				dataGridView->Rows[i]->Cells[s]->Value = StrConvert(books[i].name);
+				s++;
+			}
+			if (columns[1])
+			{
+				dataGridView->Rows[i]->Cells[s]->Value = StrConvert(books[i].author);
+				s++;
+			}
+			if (columns[2])
+			{
+				dataGridView->Rows[i]->Cells[s]->Value = books[i].pages;
+				s++;
+			}
+			if (columns[3])
+				dataGridView->Rows[i]->Cells[s]->Value = books[i].year;
 		}
-		if (columns[1])
-		{
-			dataGridView->Rows[i]->Cells[s]->Value = StrConvert(books[i].author);
-			s++;
-		}
-		if (columns[2])
-		{
-			dataGridView->Rows[i]->Cells[s]->Value = books[i].pages;
-			s++;
-		}
-		if (columns[3])
-			dataGridView->Rows[i]->Cells[s]->Value = books[i].year;
-	}
 }
 
 void EventsHandler::SaveFile()
@@ -91,7 +92,9 @@ void EventsHandler::SaveBook(TextBox^ textBoxName, TextBox^ textBoxAuthor, TextB
 
 void EventsHandler::DeleteBook(int index)
 {
-	allBooks.erase(allBooks.begin() + index);
+	auto itr = std::find(allBooks.begin(), allBooks.end(), books[index]);
+	if (itr == allBooks.end()) return;
+	allBooks.erase(allBooks.begin() + distance(allBooks.begin(), itr));
 }
 
 void EventsHandler::CreateBook()
